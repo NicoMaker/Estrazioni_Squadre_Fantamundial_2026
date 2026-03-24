@@ -1,125 +1,182 @@
 <!DOCTYPE html>
 <html lang="it">
-  <head>
-    <meta charset="UTF-8" />
-    <title>Sorteggio Mondiale</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+<head>
+  <meta charset="UTF-8"/>
+  <title>World Cup Draw 2026</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,400;0,600;0,700;0,800;0,900;1,800&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
 
-    <!-- Font -->
-    <link
-      href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;600&family=Bebas+Neue&display=swap"
-      rel="stylesheet"
-    />
+  <div class="noise"></div>
 
-    <!-- Icone (Material Symbols) -->
-    <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,500,0,0"
-    />
-
-    <link rel="stylesheet" href="style.css" />
-  </head>
-  <body>
-    <div class="container">
-      <header class="header">
-        <h1>WORLD CUP DRAW</h1>
-        <p class="subtitle">Sorteggio giocatori e nazionali</p>
-      </header>
-
-      <main>
-        <section class="main-actions">
-          <button id="btnDraw" class="btn-draw">
-            <span class="material-symbols-rounded">casino</span>
-            <span>ESegui sorteggio</span>
-          </button>
-
-          <div class="quick-stats">
-            <div class="stat-card">
-              <span class="label">Partecipanti</span>
-              <span class="value" id="c1">0</span>
-            </div>
-            <div class="stat-card">
-              <span class="label">Nazionali</span>
-              <span class="value" id="c2">0</span>
-            </div>
-          </div>
-        </section>
-
-        <section class="draw-layout">
-          <!-- URNA GIOCATORI -->
-          <div class="urn-section" id="urnPlayers">
-            <div class="urn-label">
-              <span>Giocatori</span>
-              <span class="counter">
-                <span class="material-symbols-rounded">person</span>
-                <span id="c1b">0</span>
-              </span>
-            </div>
-
-            <div class="urn-visual">
-              <div class="urn-glass">
-                <div class="balls-container" id="playersBalls"></div>
-              </div>
-            </div>
-
-            <div class="result-box" id="playerResult">
-              Premi “ESegui sorteggio”
-            </div>
-
-            <div class="list-container">
-              <div class="list-title">Giocatori rimasti</div>
-              <div id="playersList"></div>
-            </div>
-          </div>
-
-          <!-- URNA NAZIONALI -->
-          <div class="urn-section" id="urnNations">
-            <div class="urn-label">
-              <span>Nazionali</span>
-              <span class="counter">
-                <span class="material-symbols-rounded">flag</span>
-                <span id="c2b">0</span>
-              </span>
-            </div>
-
-            <div class="urn-visual">
-              <div class="urn-glass">
-                <div class="balls-container" id="nationsBalls"></div>
-              </div>
-            </div>
-
-            <div class="result-box" id="nationResult">
-              Premi “ESegui sorteggio”
-            </div>
-
-            <div class="list-container">
-              <div class="list-title">Nazionali rimaste</div>
-              <div id="nationsList"></div>
-            </div>
-          </div>
-        </section>
-
-        <!-- CRONOLOGIA -->
-        <section class="history-section">
-          <div class="history-header">
-            <h2>Cronologia sorteggi</h2>
-            <div class="history-actions">
-              <button class="btn-wa" id="btnWa">
-                <span class="material-symbols-rounded">share</span>
-                Invia su WhatsApp
-              </button>
-              <button class="btn-reset" onclick="resetApp()">
-                <span class="material-symbols-rounded">restart_alt</span>
-                Reset
-              </button>
-            </div>
-          </div>
-
-          <div id="historyList" class="history-list"></div>
-        </section>
-      </main>
+  <!-- ═══ HEADER FISSO ═══ -->
+  <header class="topbar" id="topbar">
+    <div class="topbar-inner">
+      <div class="topbar-brand">
+        <span class="topbar-trophy">⚽</span>
+        <div class="topbar-text">
+          <span class="topbar-title">WORLD CUP DRAW</span>
+          <span class="topbar-year">FIFA 2026</span>
+        </div>
+      </div>
+      <div class="topbar-stats">
+        <div class="topbar-stat">
+          <span class="ts-icon">👤</span>
+          <span class="ts-val" id="c1">0</span>
+          <span class="ts-lbl">Giocatori</span>
+        </div>
+        <div class="ts-sep"></div>
+        <div class="topbar-stat">
+          <span class="ts-icon">🏆</span>
+          <span class="ts-val" id="c2">0</span>
+          <span class="ts-lbl">Nazionali</span>
+        </div>
+        <div class="ts-sep"></div>
+        <div class="topbar-stat">
+          <span class="ts-icon">🎲</span>
+          <span class="ts-val" id="c3">0</span>
+          <span class="ts-lbl">Estratti</span>
+        </div>
+      </div>
+      <div class="topbar-actions">
+        <button class="btn-reset-top" onclick="resetApp()">🔄 Reset</button>
+      </div>
     </div>
+    <div class="topbar-progress">
+      <div class="topbar-progress-bar" id="progressBar"></div>
+    </div>
+  </header>
 
-    <script src="script.js"></script>
-  </body>
+  <!-- ═══ MAIN CONTENT ═══ -->
+  <div class="page-wrap">
+    <div class="container">
+
+      <!-- HERO -->
+      <section class="hero">
+        <div class="hero-eyebrow">
+          <span class="eyebrow-dot"></span>
+          SORTEGGIO UFFICIALE
+          <span class="eyebrow-dot"></span>
+        </div>
+        <h1 class="hero-title">
+          <span class="ht-world">WORLD</span>
+          <span class="ht-cup">CUP</span>
+          <span class="ht-draw">DRAW</span>
+        </h1>
+        <p class="hero-sub">Coppa del Mondo FIFA 2026 · USA · Canada · Messico</p>
+        <div class="hero-flags">
+          🇺🇸 🇨🇦 🇲🇽
+        </div>
+      </section>
+
+      <!-- DRAW BUTTON -->
+      <div class="draw-btn-wrap">
+        <button id="btnDraw" class="btn-draw">
+          <span class="btn-draw-inner">
+            <span class="btn-dice">🎲</span>
+            <span class="btn-label">ESTRAI</span>
+          </span>
+          <span class="btn-shimmer"></span>
+          <span class="btn-ring"></span>
+        </button>
+        <p class="draw-hint" id="drawHint">Premi per estrarre il prossimo abbinamento</p>
+      </div>
+
+      <!-- RESULT REVEAL -->
+      <div class="result-reveal" id="resultReveal">
+        <div class="rr-card rr-player">
+          <div class="rr-label">GIOCATORE ESTRATTO</div>
+          <div class="rr-value" id="playerResult">—</div>
+        </div>
+        <div class="rr-vs">
+          <div class="rr-vs-line"></div>
+          <div class="rr-vs-badge">VS</div>
+          <div class="rr-vs-line"></div>
+        </div>
+        <div class="rr-card rr-nation">
+          <div class="rr-label">NAZIONALE ASSEGNATA</div>
+          <div class="rr-value rr-nation-val">
+            <span class="rr-flag" id="resultFlag">🏴</span>
+            <span id="nationResult">—</span>
+            <span class="rr-code" id="resultCode"></span>
+          </div>
+        </div>
+      </div>
+
+      <!-- URNE -->
+      <div class="draw-layout">
+
+        <!-- GIOCATORI -->
+        <div class="urn-section" id="urnPlayers">
+          <div class="urn-head">
+            <div class="urn-title">
+              <span>👤</span> Giocatori
+            </div>
+            <div class="urn-badge" id="c1b">0</div>
+          </div>
+          <div class="urn-visual">
+            <div class="urn-glow ug-gold"></div>
+            <div class="urn-glass">
+              <div class="urn-glare"></div>
+              <div class="balls-container" id="playersBalls"></div>
+              <div class="urn-fade"></div>
+            </div>
+          </div>
+          <div class="urn-list">
+            <div class="ul-head">In urna</div>
+            <div id="playersList" class="ul-body"></div>
+          </div>
+        </div>
+
+        <!-- NAZIONALI -->
+        <div class="urn-section" id="urnNations">
+          <div class="urn-head">
+            <div class="urn-title">
+              <span>🏆</span> Nazionali
+            </div>
+            <div class="urn-badge" id="c2b">0</div>
+          </div>
+          <div class="urn-visual">
+            <div class="urn-glow ug-blue"></div>
+            <div class="urn-glass">
+              <div class="urn-glare"></div>
+              <div class="balls-container" id="nationsBalls"></div>
+              <div class="urn-fade"></div>
+            </div>
+          </div>
+          <div class="urn-list">
+            <div class="ul-head">In urna</div>
+            <div id="nationsList" class="ul-body"></div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- CRONOLOGIA -->
+      <section class="history-section">
+        <div class="history-head">
+          <div class="history-title-row">
+            <h2>📋 Cronologia</h2>
+            <span class="hcount" id="historyCount">0 estrazioni</span>
+          </div>
+          <div class="history-btns">
+            <button class="btn-wa" id="btnWa">📱 WhatsApp</button>
+          </div>
+        </div>
+        <div id="historyList" class="history-list"></div>
+        <div class="history-empty" id="historyEmpty">
+          Nessuna estrazione — premi <strong>ESTRAI</strong> per iniziare ⚽
+        </div>
+      </section>
+
+    </div>
+  </div>
+
+  <!-- FLASH -->
+  <div class="flash-overlay" id="flashOverlay"></div>
+
+  <script src="script.js"></script>
+</body>
 </html>

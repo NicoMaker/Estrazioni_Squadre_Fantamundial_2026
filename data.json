@@ -14,18 +14,84 @@
     "Valentina Pozzi"
   ],
   "nations": [
-    { "name": "Spagna", "colors": ["#AA151B", "#F1BF00", "#AA151B"] },
-    { "name": "Argentina", "colors": ["#74ACDF", "#FFFFFF", "#74ACDF"] },
-    { "name": "Francia", "colors": ["#002395", "#FFFFFF", "#ED2939"] },
-    { "name": "Inghilterra", "colors": ["#FFFFFF", "#CE1124", "#FFFFFF"] },
-    { "name": "Brasile", "colors": ["#009c3b", "#FFDF00"] },
-    { "name": "Portogallo", "colors": ["#006600", "#FF0000", "#FF0000"] },
-    { "name": "Olanda", "colors": ["#D0002A", "#FFFFFF", "#0077A8"] },
-    { "name": "Marocco", "colors": ["#C1272D", "#C1272D"] },
-    { "name": "Belgio", "colors": ["#000000", "#FFD935", "#EF3340"] },
-    { "name": "Germania", "colors": ["#000000", "#DD0000", "#FFCE00"] },
-    { "name": "Croazia", "colors": ["#FF0000", "#FFFFFF", "#171796"] },
-    { "name": "Senegal", "colors": ["#00853F", "#FDEF42", "#E31B23"] },
-    { "name": "Italia", "colors": ["#009246", "#FFFFFF", "#CE2B37"] }
+    {
+      "name": "Spagna",
+      "code": "ES",
+      "flag": "🇪🇸",
+      "colors": ["#AA151B", "#F1BF00", "#AA151B"]
+    },
+    {
+      "name": "Argentina",
+      "code": "AR",
+      "flag": "🇦🇷",
+      "colors": ["#74ACDF", "#FFFFFF", "#74ACDF"]
+    },
+    {
+      "name": "Francia",
+      "code": "FR",
+      "flag": "🇫🇷",
+      "colors": ["#002395", "#FFFFFF", "#ED2939"]
+    },
+    {
+      "name": "Inghilterra",
+      "code": "EN",
+      "flag": "󠁧󠁢󠁥󠁮󠁧󠁿En",
+      "colors": ["#FFFFFF", "#CE1124", "#FFFFFF"],
+      "england": true
+    },
+    {
+      "name": "Brasile",
+      "code": "BR",
+      "flag": "🇧🇷",
+      "colors": ["#009c3b", "#FFDF00", "#009c3b"]
+    },
+    {
+      "name": "Portogallo",
+      "code": "PT",
+      "flag": "🇵🇹",
+      "colors": ["#006600", "#FF0000", "#FF0000"]
+    },
+    {
+      "name": "Olanda",
+      "code": "NL",
+      "flag": "🇳🇱",
+      "colors": ["#D0002A", "#FFFFFF", "#0077A8"]
+    },
+    {
+      "name": "Marocco",
+      "code": "MA",
+      "flag": "🇲🇦",
+      "colors": ["#C1272D", "#006233", "#C1272D"]
+    },
+    {
+      "name": "Belgio",
+      "code": "BE",
+      "flag": "🇧🇪",
+      "colors": ["#000000", "#FFD935", "#EF3340"]
+    },
+    {
+      "name": "Germania",
+      "code": "DE",
+      "flag": "🇩🇪",
+      "colors": ["#000000", "#DD0000", "#FFCE00"]
+    },
+    {
+      "name": "Croazia",
+      "code": "HR",
+      "flag": "🇭🇷",
+      "colors": ["#FF0000", "#FFFFFF", "#171796"]
+    },
+    {
+      "name": "Senegal",
+      "code": "SN",
+      "flag": "🇸🇳",
+      "colors": ["#00853F", "#FDEF42", "#E31B23"]
+    },
+    {
+      "name": "Italia",
+      "code": "IT",
+      "flag": "🇮🇹",
+      "colors": ["#009246", "#FFFFFF", "#CE2B37"]
+    }
   ]
 }

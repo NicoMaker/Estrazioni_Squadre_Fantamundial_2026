@@ -1,283 +1,351 @@
-// Stato principale
-let players = [];
-let nations = [];
-let history = [];
+/* ═══════════════════════════════════════════
+   WORLD CUP DRAW 2026 — script.js
+   ═══════════════════════════════════════════ */
 
-// Totali fissi presi dal JSON (13 / 13)
+let players      = [];
+let nations      = [];
+let history      = [];
 let totalPlayers = 0;
 let totalNations = 0;
+let isDrawing    = false;
 
-// Carica i dati dal file JSON esterno
+const FLAG_MAP = {
+  "Spagna":      "🇪🇸",
+  "Argentina":   "🇦🇷",
+  "Francia":     "🇫🇷",
+  "Inghilterra": "En",
+  "Brasile":     "🇧🇷",
+  "Portogallo":  "🇵🇹",
+  "Olanda":      "🇳🇱",
+  "Marocco":     "🇲🇦",
+  "Belgio":      "🇧🇪",
+  "Germania":    "🇩🇪",
+  "Croazia":     "🇭🇷",
+  "Senegal":     "🇸🇳",
+  "Italia":      "🇮🇹"
+};
+
+function getFlag(nation) {
+  return nation.flag || FLAG_MAP[nation.name] || "🏳️";
+}
+
+/* ── LOAD ───────────────────────────── */
 async function loadData() {
   try {
-    const response = await fetch("data.json");
-    const data = await response.json();
+    const res  = await fetch("data.json");
+    const data = await res.json();
 
-    // Totali fissi dal JSON
     totalPlayers = data.players.length;
     totalNations = data.nations.length;
 
-    // Se il localStorage è vuoto, usa i dati del JSON
-    players = JSON.parse(localStorage.getItem("wc_p")) || [...data.players];
-    nations = JSON.parse(localStorage.getItem("wc_n")) || [...data.nations];
-    history = JSON.parse(localStorage.getItem("wc_h")) || [];
+    const savedP = localStorage.getItem("wc26_p");
+    const savedN = localStorage.getItem("wc26_n");
+    const savedH = localStorage.getItem("wc26_h");
+
+    players = savedP ? JSON.parse(savedP) : [...data.players];
+    nations = savedN ? JSON.parse(savedN) : [...data.nations];
+    history = savedH ? JSON.parse(savedH) : [];
 
     render();
-  } catch (error) {
-    console.error("Errore nel caricamento dei dati:", error);
+  } catch (e) {
+    console.error("Errore caricamento dati:", e);
   }
 }
 
-// Salva su localStorage
+/* ── SAVE ───────────────────────────── */
 function save() {
-  localStorage.setItem("wc_p", JSON.stringify(players));
-  localStorage.setItem("wc_n", JSON.stringify(nations));
-  localStorage.setItem("wc_h", JSON.stringify(history));
+  localStorage.setItem("wc26_p", JSON.stringify(players));
+  localStorage.setItem("wc26_n", JSON.stringify(nations));
+  localStorage.setItem("wc26_h", JSON.stringify(history));
 }
 
-// Reset totale app
+/* ── RESET ──────────────────────────── */
 window.resetApp = function () {
-  if (confirm("Resettare il sorteggio?")) {
-    localStorage.clear();
+  if (confirm("Resettare il sorteggio? Tutti i dati verranno cancellati.")) {
+    localStorage.removeItem("wc26_p");
+    localStorage.removeItem("wc26_n");
+    localStorage.removeItem("wc26_h");
     location.reload();
   }
 };
 
-// Funzione di render principale
+/* ── RENDER ─────────────────────────── */
 function render() {
-  // Contatori in alto (totali) e sulle urne (rimasti)
-  const c1 = document.getElementById("c1");   // tot partecipanti
-  const c2 = document.getElementById("c2");   // tot nazionali
-  const c1b = document.getElementById("c1b"); // partecipanti rimasti
-  const c2b = document.getElementById("c2b"); // nazionali rimaste
+  setText("c1", totalPlayers);
+  setText("c2", totalNations);
+  setText("c3", history.length);
+  setText("c1b", players.length);
+  setText("c2b", nations.length);
+  setText("historyCount", history.length + (history.length === 1 ? " estrazione" : " estrazioni"));
 
-  if (c1) c1.textContent = totalPlayers;
-  if (c2) c2.textContent = totalNations;
-  if (c1b) c1b.textContent = players.length;
-  if (c2b) c2b.textContent = nations.length;
+  const drawn = totalPlayers - players.length;
+  const pct   = totalPlayers > 0 ? (drawn / totalPlayers) * 100 : 0;
+  const bar   = document.getElementById("progressBar");
+  if (bar) bar.style.width = pct + "%";
 
-  // Render palline
+  const hint = document.getElementById("drawHint");
+  if (hint) {
+    if (players.length === 0 || nations.length === 0) {
+      hint.textContent = "Sorteggio completato! 🏆";
+    } else {
+      hint.textContent = players.length + " giocatori · " + nations.length + " nazionali rimaste";
+    }
+  }
+
   renderBalls(players, "playersBalls", false);
   renderBalls(nations, "nationsBalls", true);
-
-  // Liste sotto le urne
   renderLists();
-
-  // Cronologia
   renderHistory();
 
-  // Stato pulsante sorteggio
-  const btnDraw = document.getElementById("btnDraw");
-  if (btnDraw) {
-    btnDraw.disabled = players.length === 0 || nations.length === 0;
-  }
+  const btn = document.getElementById("btnDraw");
+  if (btn) btn.disabled = (players.length === 0 || nations.length === 0 || isDrawing);
 
-  // Messaggi nelle box risultato se non bloccate
-  const playerResultBox = document.getElementById("playerResult");
-  const nationResultBox = document.getElementById("nationResult");
-  if (playerResultBox && !playerResultBox.dataset.locked) {
-    playerResultBox.textContent = "Premi “ESegui sorteggio”";
-  }
-  if (nationResultBox && !nationResultBox.dataset.locked) {
-    nationResultBox.textContent = "Premi “ESegui sorteggio”";
-  }
+  const empty = document.getElementById("historyEmpty");
+  if (empty) empty.classList.toggle("hidden", history.length > 0);
 }
 
-// Disegna le palline dentro l’urna
+function setText(id, val) {
+  const el = document.getElementById(id);
+  if (el) el.textContent = val;
+}
+
+/* ═══════════════════════════════════════════
+   RENDER BALLS
+   ─ Nazione normale  → gradient + sigla (ES, IT…)
+   ─ Inghilterra      → bianco + croce rossa SVG + "EN"
+   ─ Giocatore        → oro + iniziali
+   ═══════════════════════════════════════════ */
 function renderBalls(list, containerId, isNation) {
   const container = document.getElementById(containerId);
   if (!container) return;
 
-  container.innerHTML = list
-    .map((item, i) => {
-      const x = 10 + (i % 4) * 20;
-      const y = 25 + Math.floor(i / 4) * 18;
-      const delay = (Math.random() * 0.4).toFixed(2) + "s";
-      const tx = Math.random() * 100 - 50 + "px";
-      const ty = Math.random() * -160 - 40 + "px";
+  const cols = 4;
+  container.innerHTML = list.map((item, i) => {
+    const x     = 6  + (i % cols) * 23;
+    const y     = 14 + Math.floor(i / cols) * 24;
+    const delay = (Math.random() * 0.4).toFixed(2) + "s";
+    const tx    = (Math.random() * 100 - 50).toFixed(0) + "px";
+    const ty    = (Math.random() * -130 - 40).toFixed(0) + "px";
+    const base  = `left:${x}%;top:${y}%;--delay:${delay};--tx:${tx};--ty:${ty};`;
 
-      let style = `left:${x}%; top:${y}%; --delay:${delay}; --tx:${tx}; --ty:${ty};`;
+    if (isNation) {
+      const code = item.code || "??";
 
-      if (isNation) {
-        // caso speciale: Inghilterra con croce rossa
-        if (item.name === "Inghilterra") {
-          style += `
-            background-color: #ffffff;
-            background-image:
-              linear-gradient(#ce1124, #ce1124),
-              linear-gradient(#ce1124, #ce1124);
-            background-size:
-              28% 100%,   /* barra verticale rossa */
-              100% 28%;   /* barra orizzontale rossa */
-            background-position:
-              50% 50%,    /* centro palla */
-              50% 50%;
-            background-repeat: no-repeat;
-          `;
-        } else {
-          // supporta 2 o 3 colori
-          const c = item.colors;
-          let grad;
-
-          if (c.length === 2) {
-            // solo due colori (es. bianco/rosso)
-            grad = `linear-gradient(135deg, ${c[0]} 50%, ${c[1]} 50%)`;
-          } else {
-            // tre colori (default)
-            grad = `linear-gradient(135deg, ${c[0]} 33%, ${c[1]} 33%, ${c[1]} 66%, ${c[2]} 66%)`;
-          }
-
-          style += `background:${grad};`;
-        }
-
-        return `<div class="ball" style="${style}" title="${item.name}"></div>`;
-      } else {
-        // item è una stringa (nome giocatore)
-        style += `background:radial-gradient(circle at 30% 30%, #fff, var(--gold)); color:#000;`;
-        const initials = item
-          .split(" ")
-          .map((p) => p[0])
-          .join("");
-        return `<div class="ball" style="${style}" title="${item}">${initials}</div>`;
+      /* ── INGHILTERRA: bianco + croce di San Giorgio ── */
+      if (item.england) {
+        return `
+          <div class="ball ball-england" style="${base}" title="${item.name}">
+            <svg class="eng-cross" viewBox="0 0 36 36" xmlns="http://www.w3.org/2000/svg">
+              <rect width="36" height="36" rx="18" fill="#FFFFFF"/>
+              <!-- croce orizzontale -->
+              <rect x="0" y="13" width="36" height="10" rx="0" fill="#CE1124"/>
+              <!-- croce verticale -->
+              <rect x="13" y="0" width="10" height="36" rx="0" fill="#CE1124"/>
+              <!-- maschera circolare -->
+              <rect width="36" height="36" rx="18" fill="none"
+                stroke="#FFFFFF" stroke-width="0"/>
+            </svg>
+            <span class="ball-code" style="color:#CE1124;text-shadow:0 1px 2px rgba(255,255,255,.8);">${code}</span>
+          </div>`;
       }
-    })
-    .join("");
+
+      /* ── NAZIONE NORMALE: gradient + sigla ── */
+      const c = item.colors;
+      let grad;
+      if (c.length === 2) {
+        grad = `linear-gradient(135deg,${c[0]} 50%,${c[1]} 50%)`;
+      } else {
+        grad = `linear-gradient(135deg,${c[0]} 33%,${c[1]} 33%,${c[1]} 66%,${c[2]} 66%)`;
+      }
+
+      /* Calcola colore testo contrastante rispetto al colore centrale */
+      const midColor = c[Math.floor(c.length / 2)];
+      const textCol  = contrastColor(midColor);
+
+      return `
+        <div class="ball" style="${base}background:${grad};" title="${item.name}">
+          <span class="ball-code" style="color:${textCol};">${code}</span>
+        </div>`;
+
+    } else {
+      /* ── GIOCATORE: oro + iniziali ── */
+      const initials = item.split(" ").map(p => p[0]).join("").slice(0, 2).toUpperCase();
+      return `
+        <div class="ball ball-player" style="${base}" title="${item}">
+          ${initials}
+        </div>`;
+    }
+  }).join("");
 }
 
-// Liste testuali sotto le urne
+/* Restituisce #fff o #000 in base alla luminosità del colore hex */
+function contrastColor(hex) {
+  try {
+    const h = hex.replace("#","");
+    const r = parseInt(h.slice(0,2),16);
+    const g = parseInt(h.slice(2,4),16);
+    const b = parseInt(h.slice(4,6),16);
+    const lum = (0.299*r + 0.587*g + 0.114*b) / 255;
+    return lum > 0.55 ? "#1a1a1a" : "#ffffff";
+  } catch {
+    return "#ffffff";
+  }
+}
+
+/* ── RENDER LISTS ───────────────────── */
 function renderLists() {
-  const playersListEl = document.getElementById("playersList");
-  const nationsListEl = document.getElementById("nationsList");
+  const pEl = document.getElementById("playersList");
+  const nEl = document.getElementById("nationsList");
 
-  if (playersListEl) {
-    playersListEl.innerHTML = players
-      .map((p) => `<div class="list-item">${p}</div>`)
-      .join("");
+  if (pEl) {
+    pEl.innerHTML = players.length
+      ? players.map(p => `<div class="list-item"><span>👤</span><span>${p}</span></div>`).join("")
+      : `<div class="list-item" style="color:var(--text3);font-style:italic">Nessun giocatore rimasto</div>`;
   }
 
-  if (nationsListEl) {
-    nationsListEl.innerHTML = nations
-      .map((n) => `<div class="list-item">${n.name}</div>`)
-      .join("");
+  if (nEl) {
+    nEl.innerHTML = nations.length
+      ? nations.map(n => `
+          <div class="list-item">
+            <span class="list-flag">${getFlag(n)}</span>
+            <span>${n.name}</span>
+            <span class="list-code">${n.code || ""}</span>
+          </div>`).join("")
+      : `<div class="list-item" style="color:var(--text3);font-style:italic">Nessuna nazionale rimasta</div>`;
   }
 }
 
-// Cronologia con freccia centrata
+/* ── RENDER HISTORY ─────────────────── */
 function renderHistory() {
   const container = document.getElementById("historyList");
   if (!container) return;
 
-  container.innerHTML = history
-    .map(
-      (h) => `
-    <div class="history-entry">
-      <div class="history-left">
-        <span class="history-name">${h.player}</span>
-      </div>
-      <div class="history-arrow">
-        <span class="material-symbols-rounded">trending_flat</span>
-      </div>
-      <div class="history-right">
-        <span class="history-team">${h.nation}</span>
-      </div>
-    </div>
-  `
-    )
-    .join("");
+  container.innerHTML = history.map((h, i) => {
+    const num  = history.length - i;
+    const flag = h.flag || FLAG_MAP[h.nation] || "🏳️";
+    const code = h.code || "";
+    return `
+      <div class="history-entry">
+        <div class="history-left">
+          <div class="history-player">
+            <span class="history-name">${h.player}</span>
+            <span class="history-num">#${num}</span>
+          </div>
+        </div>
+        <div class="history-arrow">→</div>
+        <div class="history-right">
+          <div class="history-nation">
+            <span class="history-flag">${flag}</span>
+            <span class="history-team">${h.nation}</span>
+            <span class="history-code">${code}</span>
+          </div>
+        </div>
+      </div>`;
+  }).join("");
 }
 
-// Logica sorteggio singolo
+/* ── DRAW ───────────────────────────── */
 function drawOnce() {
-  if (players.length === 0 || nations.length === 0) {
-    alert("Non ci sono abbastanza giocatori o nazionali per il sorteggio.");
-    return;
-  }
+  if (players.length === 0 || nations.length === 0 || isDrawing) return;
 
-  // Attiva animazione palline
+  isDrawing = true;
+  const btn = document.getElementById("btnDraw");
+  if (btn) btn.disabled = true;
+
   toggleMixing(true);
+  triggerFlash();
 
-  // Delay per simulare mescolamento
   setTimeout(() => {
-    // Giocatore: ultimo inserito esce per primo (LIFO)
-    const playerIndex = players.length - 1;
+    const pIdx  = players.length - 1;
+    const nIdx  = Math.floor(Math.random() * nations.length);
 
-    // Nazionale: casuale, come prima
-    const nationIndex = Math.floor(Math.random() * nations.length);
+    const player = players.splice(pIdx, 1)[0];
+    const nation = nations.splice(nIdx, 1)[0];
+    const flag   = getFlag(nation);
 
-    const player = players.splice(playerIndex, 1)[0];
-    const nation = nations.splice(nationIndex, 1)[0];
+    showResult(player, nation, flag);
 
-    // Aggiorna risultato visivo
-    const playerResultBox = document.getElementById("playerResult");
-    const nationResultBox = document.getElementById("nationResult");
-
-    if (playerResultBox) {
-      playerResultBox.textContent = player;
-      playerResultBox.dataset.locked = "1";
-    }
-    if (nationResultBox) {
-      nationResultBox.textContent = nation.name;
-      nationResultBox.dataset.locked = "1";
-    }
-
-    // Aggiungi a cronologia
     history.unshift({
       player,
       nation: nation.name,
-      timestamp: new Date().toISOString()
+      code:   nation.code || "",
+      flag:   flag,
+      ts:     new Date().toISOString()
     });
 
-    // Ferma animazione e rerender
     toggleMixing(false);
+    isDrawing = false;
     save();
     render();
-  }, 800);
+  }, 900);
 }
 
-// Aggiunge/rimuove la classe .mixing alle urne
-function toggleMixing(isMixing) {
-  const urnPlayers = document.getElementById("urnPlayers");
-  const urnNations = document.getElementById("urnNations");
-  if (urnPlayers) {
-    urnPlayers.classList.toggle("mixing", isMixing);
-  }
-  if (urnNations) {
-    urnNations.classList.toggle("mixing", isMixing);
+/* ── SHOW RESULT ────────────────────── */
+function showResult(player, nation, flag) {
+  const reveal   = document.getElementById("resultReveal");
+  const playerEl = document.getElementById("playerResult");
+  const nationEl = document.getElementById("nationResult");
+  const flagEl   = document.getElementById("resultFlag");
+  const codeEl   = document.getElementById("resultCode");
+
+  if (playerEl) playerEl.textContent = player;
+  if (nationEl) nationEl.textContent = nation.name;
+  if (flagEl)   flagEl.textContent   = flag;
+  if (codeEl)   codeEl.textContent   = nation.code ? "(" + nation.code + ")" : "";
+
+  if (reveal) {
+    reveal.classList.remove("visible");
+    void reveal.offsetWidth;
+    reveal.classList.add("visible");
   }
 }
 
-// Testo per WhatsApp
+/* ── MIXING ─────────────────────────── */
+function toggleMixing(on) {
+  ["urnPlayers","urnNations"].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.classList.toggle("mixing", on);
+  });
+}
+
+/* ── FLASH ──────────────────────────── */
+function triggerFlash() {
+  const ov = document.getElementById("flashOverlay");
+  if (!ov) return;
+  ov.classList.add("flash");
+  setTimeout(() => ov.classList.remove("flash"), 180);
+}
+
+/* ── WHATSAPP ───────────────────────── */
 function buildWhatsappText() {
-  if (history.length === 0) {
-    return "Nessun sorteggio effettuato.";
-  }
+  if (history.length === 0) return "Nessun sorteggio effettuato.";
 
-  const lines = history
-    .slice() // copia
-    .reverse() // dal primo sorteggio all'ultimo
-    .map((h, i) => `${i + 1}) ${h.player} -> ${h.nation}`);
+  const lines = [...history]
+    .reverse()
+    .map((h, i) => {
+      const flag = h.flag || FLAG_MAP[h.nation] || "";
+      const code = h.code ? ` (${h.code})` : "";
+      return `${i + 1}. ${h.player}  ➜  ${flag} ${h.nation}${code}`;
+    });
 
-  return "Sorteggio Mondiale:\n\n" + lines.join("\n");
+  return (
+    "⚽ *WORLD CUP DRAW — FIFA 2026* ⚽\n" +
+    "🇺🇸 🇨🇦 🇲🇽  Coppa del Mondo FIFA 2026\n\n" +
+    lines.join("\n") +
+    "\n\n" +
+    `📊 Estratti: ${history.length} / ${totalPlayers}\n` +
+    "🏆 Buona fortuna a tutti!"
+  );
 }
 
-// Apertura WhatsApp
 function sendWhatsapp() {
-  const text = encodeURIComponent(buildWhatsappText());
-  const url = `https://wa.me/?text=${text}`;
+  const url = `https://wa.me/?text=${encodeURIComponent(buildWhatsappText())}`;
   window.open(url, "_blank");
 }
 
-// Inizializzazione
+/* ── INIT ───────────────────────────── */
 document.addEventListener("DOMContentLoaded", () => {
   loadData();
-
-  const btnDraw = document.getElementById("btnDraw");
-  if (btnDraw) {
-    btnDraw.addEventListener("click", drawOnce);
-  }
-
-  const btnWa = document.getElementById("btnWa");
-  if (btnWa) {
-    btnWa.addEventListener("click", sendWhatsapp);
-  }
+  document.getElementById("btnDraw")?.addEventListener("click", drawOnce);
+  document.getElementById("btnWa")?.addEventListener("click", sendWhatsapp);
 });
