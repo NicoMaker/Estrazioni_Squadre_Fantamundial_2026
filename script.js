@@ -115,8 +115,18 @@ function renderBalls(list, containerId, isNation) {
             background-repeat: no-repeat;
           `;
         } else {
-          // resto nazionali: bandiera a strisce
-          const grad = `linear-gradient(135deg, ${item.colors[0]} 33%, ${item.colors[1]} 33%, ${item.colors[1]} 66%, ${item.colors[2]} 66%)`;
+          // supporta 2 o 3 colori
+          const c = item.colors;
+          let grad;
+
+          if (c.length === 2) {
+            // solo due colori (es. bianco/rosso)
+            grad = `linear-gradient(135deg, ${c[0]} 50%, ${c[1]} 50%)`;
+          } else {
+            // tre colori (default)
+            grad = `linear-gradient(135deg, ${c[0]} 33%, ${c[1]} 33%, ${c[1]} 66%, ${c[2]} 66%)`;
+          }
+
           style += `background:${grad};`;
         }
 
