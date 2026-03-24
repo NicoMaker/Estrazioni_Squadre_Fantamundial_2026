@@ -1,0 +1,31 @@
+{
+  "players": [
+    "Denis Mascherin",
+    "Cristian Tartaro",
+    "Nico Maker",
+    "Kevin Di Bernardo",
+    "Mattia Beltrame",
+    "Kevin Sandri",
+    "Federico Burello",
+    "Adrea Campagnolo",
+    "Alex Beltrame",
+    "Lorenzo Moro",
+    "Aidan Conti",
+    "Valentina Pozzi"
+  ],
+  "nations": [
+    { "name": "Spagna", "colors": ["#AA151B", "#F1BF00", "#AA151B"] },
+    { "name": "Argentina", "colors": ["#74ACDF", "#FFFFFF", "#74ACDF"] },
+    { "name": "Francia", "colors": ["#002395", "#FFFFFF", "#ED2939"] },
+    { "name": "Inghilterra", "colors": ["#FFFFFF", "#CE1124", "#FFFFFF"] },
+    { "name": "Brasile", "colors": ["#009c3b", "#FFDF00", "#002776"] },
+    { "name": "Portogallo", "colors": ["#006600", "#FF0000", "#FF0000"] },
+    { "name": "Olanda", "colors": ["#FF6600", "#FFFFFF", "#21468B"] },
+    { "name": "Marocco", "colors": ["#C1272D", "#006233", "#C1272D"] },
+    { "name": "Belgio", "colors": ["#000000", "#FFD935", "#EF3340"] },
+    { "name": "Germania", "colors": ["#000000", "#DD0000", "#FFCE00"] },
+    { "name": "Croazia", "colors": ["#FF0000", "#FFFFFF", "#171796"] },
+    { "name": "Senegal", "colors": ["#00853F", "#FDEF42", "#E31B23"] },
+    { "name": "Italia", "colors": ["#009246", "#FFFFFF", "#CE2B37"] }
+  ]
+}
