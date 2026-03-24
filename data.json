@@ -19,12 +19,12 @@
     { "name": "Francia", "colors": ["#002395", "#FFFFFF", "#ED2939"] },
     { "name": "Inghilterra", "colors": ["#FFFFFF", "#CE1124", "#FFFFFF"] },
     { "name": "Brasile", "colors": ["#009c3b", "#FFDF00"] },
-    { "name": "Portogallo", "colors": ["#006600" , "#FF0000", "#FF0000"] },
+    { "name": "Portogallo", "colors": ["#006600", "#FF0000", "#FF0000"] },
     { "name": "Olanda", "colors": ["#D0002A", "#FFFFFF", "#0077A8"] },
     { "name": "Marocco", "colors": ["#C1272D", "#C1272D"] },
     { "name": "Belgio", "colors": ["#000000", "#FFD935", "#EF3340"] },
     { "name": "Germania", "colors": ["#000000", "#DD0000", "#FFCE00"] },
-    { "name": "Croazia", "colors": ["#FF6B6B", "#FFFFFF"] },
+    { "name": "Croazia", "colors": ["#FF0000", "#FFFFFF", "#171796"] },
     { "name": "Senegal", "colors": ["#00853F", "#FDEF42", "#E31B23"] },
     { "name": "Italia", "colors": ["#009246", "#FFFFFF", "#CE2B37"] }
   ]
