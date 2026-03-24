@@ -84,7 +84,6 @@ function render() {
 }
 
 // Disegna le palline dentro l’urna
-// Disegna le palline dentro l’urna
 function renderBalls(list, containerId, isNation) {
   const container = document.getElementById(containerId);
   if (!container) return;
@@ -134,7 +133,6 @@ function renderBalls(list, containerId, isNation) {
     })
     .join("");
 }
-
 
 // Liste testuali sotto le urne
 function renderLists() {
@@ -190,7 +188,10 @@ function drawOnce() {
 
   // Delay per simulare mescolamento
   setTimeout(() => {
-    const playerIndex = Math.floor(Math.random() * players.length);
+    // Giocatore: ultimo inserito esce per primo (LIFO)
+    const playerIndex = players.length - 1;
+
+    // Nazionale: casuale, come prima
     const nationIndex = Math.floor(Math.random() * nations.length);
 
     const player = players.splice(playerIndex, 1)[0];
