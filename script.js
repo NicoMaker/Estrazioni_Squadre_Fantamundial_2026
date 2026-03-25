@@ -13,7 +13,7 @@ const FLAG_MAP = {
   "Spagna":      "🇪🇸",
   "Argentina":   "🇦🇷",
   "Francia":     "🇫🇷",
-  "Inghilterra": "En",
+  "Inghilterra": "🏴󠁧󠁢󠁥󠁮󠁧󠁿",
   "Brasile":     "🇧🇷",
   "Portogallo":  "🇵🇹",
   "Olanda":      "🇳🇱",
@@ -26,7 +26,8 @@ const FLAG_MAP = {
 };
 
 function getFlag(nation) {
-  return nation.flag || FLAG_MAP[nation.name] || "🏳️";
+  if (typeof nation === "object") return nation.flag || FLAG_MAP[nation.name] || "🏳️";
+  return FLAG_MAP[nation] || "🏳️";
 }
 
 /* ── LOAD ───────────────────────────── */
@@ -110,10 +111,7 @@ function setText(id, val) {
 }
 
 /* ═══════════════════════════════════════════
-   RENDER BALLS
-   ─ Nazione normale  → gradient + sigla (ES, IT…)
-   ─ Inghilterra      → bianco + croce rossa SVG + "EN"
-   ─ Giocatore        → oro + iniziali
+   RENDER BALLS — sigle SOLO nell'urna
    ═══════════════════════════════════════════ */
 function renderBalls(list, containerId, isNation) {
   const container = document.getElementById(containerId);
@@ -131,25 +129,20 @@ function renderBalls(list, containerId, isNation) {
     if (isNation) {
       const code = item.code || "??";
 
-      /* ── INGHILTERRA: bianco + croce di San Giorgio ── */
+      /* ── INGHILTERRA ── */
       if (item.england) {
         return `
           <div class="ball ball-england" style="${base}" title="${item.name}">
             <svg class="eng-cross" viewBox="0 0 36 36" xmlns="http://www.w3.org/2000/svg">
               <rect width="36" height="36" rx="18" fill="#FFFFFF"/>
-              <!-- croce orizzontale -->
-              <rect x="0" y="13" width="36" height="10" rx="0" fill="#CE1124"/>
-              <!-- croce verticale -->
-              <rect x="13" y="0" width="10" height="36" rx="0" fill="#CE1124"/>
-              <!-- maschera circolare -->
-              <rect width="36" height="36" rx="18" fill="none"
-                stroke="#FFFFFF" stroke-width="0"/>
+              <rect x="0" y="14" width="36" height="8" fill="#CE1124"/>
+              <rect x="14" y="0" width="8" height="36" fill="#CE1124"/>
             </svg>
-            <span class="ball-code" style="color:#CE1124;text-shadow:0 1px 2px rgba(255,255,255,.8);">${code}</span>
+            <span class="ball-code ball-code-en">EN</span>
           </div>`;
       }
 
-      /* ── NAZIONE NORMALE: gradient + sigla ── */
+      /* ── NAZIONE NORMALE ── */
       const c = item.colors;
       let grad;
       if (c.length === 2) {
@@ -157,8 +150,6 @@ function renderBalls(list, containerId, isNation) {
       } else {
         grad = `linear-gradient(135deg,${c[0]} 33%,${c[1]} 33%,${c[1]} 66%,${c[2]} 66%)`;
       }
-
-      /* Calcola colore testo contrastante rispetto al colore centrale */
       const midColor = c[Math.floor(c.length / 2)];
       const textCol  = contrastColor(midColor);
 
@@ -168,7 +159,7 @@ function renderBalls(list, containerId, isNation) {
         </div>`;
 
     } else {
-      /* ── GIOCATORE: oro + iniziali ── */
+      /* ── GIOCATORE ── */
       const initials = item.split(" ").map(p => p[0]).join("").slice(0, 2).toUpperCase();
       return `
         <div class="ball ball-player" style="${base}" title="${item}">
@@ -178,7 +169,6 @@ function renderBalls(list, containerId, isNation) {
   }).join("");
 }
 
-/* Restituisce #fff o #000 in base alla luminosità del colore hex */
 function contrastColor(hex) {
   try {
     const h = hex.replace("#","");
@@ -187,20 +177,22 @@ function contrastColor(hex) {
     const b = parseInt(h.slice(4,6),16);
     const lum = (0.299*r + 0.587*g + 0.114*b) / 255;
     return lum > 0.55 ? "#1a1a1a" : "#ffffff";
-  } catch {
-    return "#ffffff";
-  }
+  } catch { return "#ffffff"; }
 }
 
-/* ── RENDER LISTS ───────────────────── */
+/* ── RENDER LISTS — solo bandiera + nome ── */
 function renderLists() {
   const pEl = document.getElementById("playersList");
   const nEl = document.getElementById("nationsList");
 
   if (pEl) {
     pEl.innerHTML = players.length
-      ? players.map(p => `<div class="list-item"><span>👤</span><span>${p}</span></div>`).join("")
-      : `<div class="list-item" style="color:var(--text3);font-style:italic">Nessun giocatore rimasto</div>`;
+      ? players.map(p => `
+          <div class="list-item">
+            <span class="list-icon">👤</span>
+            <span>${p}</span>
+          </div>`).join("")
+      : `<div class="list-empty">Nessun giocatore rimasto</div>`;
   }
 
   if (nEl) {
@@ -209,13 +201,12 @@ function renderLists() {
           <div class="list-item">
             <span class="list-flag">${getFlag(n)}</span>
             <span>${n.name}</span>
-            <span class="list-code">${n.code || ""}</span>
           </div>`).join("")
-      : `<div class="list-item" style="color:var(--text3);font-style:italic">Nessuna nazionale rimasta</div>`;
+      : `<div class="list-empty">Nessuna nazionale rimasta</div>`;
   }
 }
 
-/* ── RENDER HISTORY ─────────────────── */
+/* ── RENDER HISTORY — solo bandiera + nome ── */
 function renderHistory() {
   const container = document.getElementById("historyList");
   if (!container) return;
@@ -223,7 +214,6 @@ function renderHistory() {
   container.innerHTML = history.map((h, i) => {
     const num  = history.length - i;
     const flag = h.flag || FLAG_MAP[h.nation] || "🏳️";
-    const code = h.code || "";
     return `
       <div class="history-entry">
         <div class="history-left">
@@ -237,7 +227,6 @@ function renderHistory() {
           <div class="history-nation">
             <span class="history-flag">${flag}</span>
             <span class="history-team">${h.nation}</span>
-            <span class="history-code">${code}</span>
           </div>
         </div>
       </div>`;
@@ -268,7 +257,6 @@ function drawOnce() {
     history.unshift({
       player,
       nation: nation.name,
-      code:   nation.code || "",
       flag:   flag,
       ts:     new Date().toISOString()
     });
@@ -280,18 +268,16 @@ function drawOnce() {
   }, 900);
 }
 
-/* ── SHOW RESULT ────────────────────── */
+/* ── SHOW RESULT — solo bandiera + nome ── */
 function showResult(player, nation, flag) {
   const reveal   = document.getElementById("resultReveal");
   const playerEl = document.getElementById("playerResult");
   const nationEl = document.getElementById("nationResult");
   const flagEl   = document.getElementById("resultFlag");
-  const codeEl   = document.getElementById("resultCode");
 
   if (playerEl) playerEl.textContent = player;
   if (nationEl) nationEl.textContent = nation.name;
   if (flagEl)   flagEl.textContent   = flag;
-  if (codeEl)   codeEl.textContent   = nation.code ? "(" + nation.code + ")" : "";
 
   if (reveal) {
     reveal.classList.remove("visible");
@@ -316,7 +302,7 @@ function triggerFlash() {
   setTimeout(() => ov.classList.remove("flash"), 180);
 }
 
-/* ── WHATSAPP ───────────────────────── */
+/* ── WHATSAPP — solo bandiera + nome ── */
 function buildWhatsappText() {
   if (history.length === 0) return "Nessun sorteggio effettuato.";
 
@@ -324,8 +310,7 @@ function buildWhatsappText() {
     .reverse()
     .map((h, i) => {
       const flag = h.flag || FLAG_MAP[h.nation] || "";
-      const code = h.code ? ` (${h.code})` : "";
-      return `${i + 1}. ${h.player}  ➜  ${flag} ${h.nation}${code}`;
+      return `${i + 1}. ${h.player}  ➜  ${flag} ${h.nation}`;
     });
 
   return (
