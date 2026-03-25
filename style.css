@@ -247,7 +247,7 @@ body {
   display:flex; align-items:center; justify-content:center; gap:10px;
   color:var(--fifa-gold2);
 }
-.rr-flag { font-size:clamp(2rem,6vw,3rem); line-height:1; }
+
 .rr-vs {
   display:flex; flex-direction:column; align-items:center; gap:6px;
   flex-shrink:0; padding:0 12px;
@@ -332,18 +332,24 @@ body {
 }
 .ball:hover { transform:scale(1.22) translateY(-4px) !important; z-index:10; }
 
-/* Sigla sulle palline nazionali */
+/* Sigla solo nelle palline dell'urna */
 .ball-code {
   font-family:var(--font-d);
-  font-size: 9.5px;
-  font-weight: 900;
-  letter-spacing: .5px;
-  line-height: 1;
+  font-size: 9.5px; font-weight: 900;
+  letter-spacing: .5px; line-height: 1;
   text-shadow: 0 1px 3px rgba(0,0,0,.7), 0 0 6px rgba(0,0,0,.5);
-  position: relative;
-  z-index: 2;
-  pointer-events: none;
+  position: relative; z-index: 2; pointer-events: none;
 }
+.ball-code-en {
+  position: absolute !important; z-index: 10 !important;
+  font-family: var(--font-d); font-size: 8px; font-weight: 900;
+  letter-spacing: .3px; color: #CE1124 !important;
+  background: rgba(255,255,255,0.9); border-radius: 3px;
+  padding: 1px 2px; line-height: 1; text-shadow: none !important;
+  top: 50%; left: 50%; transform: translate(-50%, -50%);
+}
+
+
 
 /* ── PALLINA INGHILTERRA ── */
 .ball-england {
@@ -358,23 +364,7 @@ body {
   border-radius: 50%;
   overflow: hidden;
 }
-/* EN sopra la croce */
-.ball-code-en {
-  position: absolute !important;
-  z-index: 10 !important;
-  font-family: var(--font-d);
-  font-size: 8px;
-  font-weight: 900;
-  letter-spacing: .3px;
-  color: #CE1124 !important;
-  background: rgba(255,255,255,0.9);
-  border-radius: 3px;
-  padding: 1px 2px;
-  line-height: 1;
-  text-shadow: none !important;
-  top: 50%; left: 50%;
-  transform: translate(-50%, -50%);
-}
+
 
 /* ── PALLINA GIOCATORE ── */
 .ball-player {
@@ -426,11 +416,21 @@ body {
 }
 .list-item:hover { background:rgba(255,255,255,.03); }
 .list-item:last-child { border-bottom:none; }
-.list-flag { font-size:.95rem; line-height:1; flex-shrink:0; }
 .list-icon { font-size:.85rem; flex-shrink:0; opacity:.6; }
 .list-empty {
   padding: 10px 12px; font-size:.78rem;
   color:var(--text3); font-style:italic;
+}
+.flag-emoji-real {
+  font-size: 1.35rem;
+  line-height: 1;
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  font-family: "Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif;
+}
+.flag-emoji-lg {
+  font-size: clamp(2.2rem, 6vw, 3.2rem);
 }
 
 /* ═══════════════════════════════════════════
@@ -501,9 +501,8 @@ body {
 }
 
 .history-nation { display:flex; align-items:center; gap:7px; overflow:hidden; }
-.history-flag   { font-size:1.25rem; flex-shrink:0; }
 .history-team   { font-weight:600; color:var(--fifa-gold2); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
-/* history-code rimosso: non si mostra più la sigla in cronologia */
+
 
 .history-arrow {
   display:flex; align-items:center; justify-content:center; flex-shrink:0;
@@ -546,4 +545,8 @@ body {
 @media (max-width:380px) {
   .topbar-year { display:none; }
   .topbar-title { font-size:.9rem; }
+}
+
+.flag-emoji-real{
+  display: none;
 }

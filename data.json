@@ -35,7 +35,7 @@
     {
       "name": "Inghilterra",
       "code": "EN",
-      "flag": "🏴󠁧󠁢󠁥󠁮󠁧󠁿",
+      "flag": "EN",
       "colors": ["#FFFFFF", "#CE1124", "#FFFFFF"],
       "england": true
     },

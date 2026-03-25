@@ -13,7 +13,7 @@ const FLAG_MAP = {
   "Spagna":      "🇪🇸",
   "Argentina":   "🇦🇷",
   "Francia":     "🇫🇷",
-  "Inghilterra": "🏴󠁧󠁢󠁥󠁮󠁧󠁿",
+  "Inghilterra": "EN",
   "Brasile":     "🇧🇷",
   "Portogallo":  "🇵🇹",
   "Olanda":      "🇳🇱",
@@ -28,6 +28,18 @@ const FLAG_MAP = {
 function getFlag(nation) {
   if (typeof nation === "object") return nation.flag || FLAG_MAP[nation.name] || "🏳️";
   return FLAG_MAP[nation] || "🏳️";
+}
+
+/* Emoji bandiere per codice paese */
+const CODE_TO_EMOJI = {
+  "ES":"🇪🇸","AR":"🇦🇷","FR":"🇫🇷","EN":"🏴󠁧󠁢󠁥󠁮󠁧󠁿",
+  "BR":"🇧🇷","PT":"🇵🇹","NL":"🇳🇱","MA":"🇲🇦","BE":"🇧🇪",
+  "DE":"🇩🇪","HR":"🇭🇷","SN":"🇸🇳","IT":"🇮🇹"
+};
+
+function flagEmoji(code, name) {
+  const em = CODE_TO_EMOJI[code] || "🏳️";
+  return `<span class="flag-emoji-real">${em}</span>`;
 }
 
 /* ── LOAD ───────────────────────────── */
@@ -127,8 +139,6 @@ function renderBalls(list, containerId, isNation) {
     const base  = `left:${x}%;top:${y}%;--delay:${delay};--tx:${tx};--ty:${ty};`;
 
     if (isNation) {
-      const code = item.code || "??";
-
       /* ── INGHILTERRA ── */
       if (item.england) {
         return `
@@ -143,6 +153,7 @@ function renderBalls(list, containerId, isNation) {
       }
 
       /* ── NAZIONE NORMALE ── */
+      const code = item.code || "??";
       const c = item.colors;
       let grad;
       if (c.length === 2) {
@@ -180,7 +191,7 @@ function contrastColor(hex) {
   } catch { return "#ffffff"; }
 }
 
-/* ── RENDER LISTS — solo bandiera + nome ── */
+/* ── RENDER LISTS — bandiera reale + nome ── */
 function renderLists() {
   const pEl = document.getElementById("playersList");
   const nEl = document.getElementById("nationsList");
@@ -199,21 +210,20 @@ function renderLists() {
     nEl.innerHTML = nations.length
       ? nations.map(n => `
           <div class="list-item">
-            <span class="list-flag">${getFlag(n)}</span>
+            ${flagEmoji(n.code, n.name)}
             <span>${n.name}</span>
           </div>`).join("")
       : `<div class="list-empty">Nessuna nazionale rimasta</div>`;
   }
 }
 
-/* ── RENDER HISTORY — solo bandiera + nome ── */
+/* ── RENDER HISTORY — bandiera reale + nome ── */
 function renderHistory() {
   const container = document.getElementById("historyList");
   if (!container) return;
 
   container.innerHTML = history.map((h, i) => {
     const num  = history.length - i;
-    const flag = h.flag || FLAG_MAP[h.nation] || "🏳️";
     return `
       <div class="history-entry">
         <div class="history-left">
@@ -225,7 +235,7 @@ function renderHistory() {
         <div class="history-arrow">→</div>
         <div class="history-right">
           <div class="history-nation">
-            <span class="history-flag">${flag}</span>
+            ${flagEmoji(h.code, h.nation)}
             <span class="history-team">${h.nation}</span>
           </div>
         </div>
@@ -257,6 +267,7 @@ function drawOnce() {
     history.unshift({
       player,
       nation: nation.name,
+      code:   nation.code || "",
       flag:   flag,
       ts:     new Date().toISOString()
     });
@@ -268,16 +279,16 @@ function drawOnce() {
   }, 900);
 }
 
-/* ── SHOW RESULT — solo bandiera + nome ── */
+/* ── SHOW RESULT — bandiera immagine + nome ── */
 function showResult(player, nation, flag) {
   const reveal   = document.getElementById("resultReveal");
   const playerEl = document.getElementById("playerResult");
   const nationEl = document.getElementById("nationResult");
-  const flagEl   = document.getElementById("resultFlag");
 
   if (playerEl) playerEl.textContent = player;
   if (nationEl) nationEl.textContent = nation.name;
-  if (flagEl)   flagEl.textContent   = flag;
+  const flagSpan = document.getElementById("resultFlagSpan");
+  if (flagSpan) flagSpan.textContent = CODE_TO_EMOJI[nation.code] || getFlag(nation) || "🏳️";
 
   if (reveal) {
     reveal.classList.remove("visible");
