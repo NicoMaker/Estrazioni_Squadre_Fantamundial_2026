@@ -1,7 +1,3 @@
-/* ═══════════════════════════════════════════
-   WORLD CUP DRAW 2026 — script.js
-   ═══════════════════════════════════════════ */
-
 let players = [];
 let nations = [];
 let history = [];
@@ -31,7 +27,6 @@ function getFlag(nation) {
   return FLAG_MAP[nation] || "🏳️";
 }
 
-/* Emoji bandiere per codice paese */
 const CODE_TO_EMOJI = {
   ES: "🇪🇸",
   AR: "🇦🇷",
@@ -53,7 +48,6 @@ function flagEmoji(code, name) {
   return `<span class="flag-emoji-real">${em}</span>`;
 }
 
-/* ── LOAD ───────────────────────────── */
 async function loadData() {
   try {
     const res = await fetch("data.json");
@@ -76,14 +70,12 @@ async function loadData() {
   }
 }
 
-/* ── SAVE ───────────────────────────── */
 function save() {
   localStorage.setItem("wc26_p", JSON.stringify(players));
   localStorage.setItem("wc26_n", JSON.stringify(nations));
   localStorage.setItem("wc26_h", JSON.stringify(history));
 }
 
-/* ── RESET ──────────────────────────── */
 window.resetApp = function () {
   if (confirm("Resettare il sorteggio? Tutti i dati verranno cancellati.")) {
     localStorage.removeItem("wc26_p");
@@ -93,7 +85,6 @@ window.resetApp = function () {
   }
 };
 
-/* ── RENDER ─────────────────────────── */
 function render() {
   setText("c1", totalPlayers);
   setText("c2", totalNations);
@@ -140,10 +131,6 @@ function setText(id, val) {
   const el = document.getElementById(id);
   if (el) el.textContent = val;
 }
-
-/* ═══════════════════════════════════════════
-   RENDER BALLS — sigle SOLO nell'urna
-   ═══════════════════════════════════════════ */
 function renderBalls(list, containerId, isNation) {
   const container = document.getElementById(containerId);
   if (!container) return;
@@ -159,7 +146,6 @@ function renderBalls(list, containerId, isNation) {
       const base = `left:${x}%;top:${y}%;--delay:${delay};--tx:${tx};--ty:${ty};`;
 
       if (isNation) {
-        /* ── INGHILTERRA ── */
         if (item.england) {
           return `
           <div class="ball ball-england" style="${base}" title="${item.name}">
@@ -171,8 +157,6 @@ function renderBalls(list, containerId, isNation) {
             <span class="ball-code ball-code-en">EN</span>
           </div>`;
         }
-
-        /* ── NAZIONE NORMALE ── */
         const code = item.code || "??";
         const c = item.colors;
         let grad;
@@ -189,7 +173,6 @@ function renderBalls(list, containerId, isNation) {
           <span class="ball-code" style="color:${textCol};">${code}</span>
         </div>`;
       } else {
-        /* ── GIOCATORE ── */
         const initials = item
           .split(" ")
           .map((p) => p[0])
@@ -218,7 +201,6 @@ function contrastColor(hex) {
   }
 }
 
-/* ── RENDER LISTS — bandiera reale + nome ── */
 function renderLists() {
   const pEl = document.getElementById("playersList");
   const nEl = document.getElementById("nationsList");
@@ -252,7 +234,6 @@ function renderLists() {
   }
 }
 
-/* ── RENDER HISTORY — bandiera reale + nome ── */
 function renderHistory() {
   const container = document.getElementById("historyList");
   if (!container) return;
@@ -280,7 +261,6 @@ function renderHistory() {
     .join("");
 }
 
-/* ── DRAW ───────────────────────────── */
 function drawOnce() {
   if (players.length === 0 || nations.length === 0 || isDrawing) return;
 
@@ -316,7 +296,6 @@ function drawOnce() {
   }, 900);
 }
 
-/* ── SHOW RESULT — bandiera immagine + nome ── */
 function showResult(player, nation, flag) {
   const reveal = document.getElementById("resultReveal");
   const playerEl = document.getElementById("playerResult");
@@ -336,7 +315,6 @@ function showResult(player, nation, flag) {
   }
 }
 
-/* ── MIXING ─────────────────────────── */
 function toggleMixing(on) {
   ["urnPlayers", "urnNations"].forEach((id) => {
     const el = document.getElementById(id);
@@ -344,7 +322,6 @@ function toggleMixing(on) {
   });
 }
 
-/* ── FLASH ──────────────────────────── */
 function triggerFlash() {
   const ov = document.getElementById("flashOverlay");
   if (!ov) return;
@@ -352,7 +329,6 @@ function triggerFlash() {
   setTimeout(() => ov.classList.remove("flash"), 180);
 }
 
-/* ── WHATSAPP — solo bandiera + nome ── */
 function buildWhatsappText() {
   if (history.length === 0) return "Nessun sorteggio effettuato.";
 
@@ -375,7 +351,6 @@ function sendWhatsapp() {
   window.open(url, "_blank");
 }
 
-/* ── INIT ───────────────────────────── */
 document.addEventListener("DOMContentLoaded", () => {
   loadData();
   document.getElementById("btnDraw")?.addEventListener("click", drawOnce);
