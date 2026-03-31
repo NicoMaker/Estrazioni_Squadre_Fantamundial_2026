@@ -416,8 +416,18 @@ body {
   border: 1px solid rgba(255,255,255,.15);
   display: block;
 }
+.ball-flag-fill {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+  pointer-events: none;
+}
+
 .ball-flag-img {
-  width: 22px;
+  width: 26px;
   height: auto;
   border-radius: 2px;
   display: block;
@@ -563,6 +573,32 @@ body {
 .ball:hover {
   transform: scale(1.3) translateY(-4px) !important;
   z-index: 20;
+}
+
+.ball-england {
+  background: #fff !important;
+  position: relative;
+}
+.eng-cross-bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  overflow: hidden;
+}
+.ball-code-en-text {
+  position: relative;
+  z-index: 2;
+  font-family: var(--font-d);
+  font-size: 7px;
+  font-weight: 900;
+  color: #CE1124 !important;
+  text-shadow: none;
+  background: rgba(255,255,255,0.75);
+  border-radius: 2px;
+  padding: 1px 2px;
+  line-height: 1;
 }
 
 .ball-nation {

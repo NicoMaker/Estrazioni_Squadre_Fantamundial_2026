@@ -199,9 +199,8 @@ function renderBalls(list, containerId, isNation) {
         ? `linear-gradient(135deg,${c[0]} 50%,${c[1]} 50%)`
         : `linear-gradient(135deg,${c[0]} 33%,${c[1]} 33%,${c[1]} 66%,${c[2]} 66%)`;
       return `
-      <div class="ball ball-nation" style="${base}background:${grad};" title="${item.name}">
-        <img class="ball-flag-img" src="https://flagcdn.com/w40/${fc}.png" alt="${item.name}" />
-        <span class="ball-nation-code">${item.code}</span>
+      <div class="ball ball-nation" style="${base}" title="${item.name}">
+        <img class="ball-flag-fill" src="https://flagcdn.com/w40/${fc}.png" alt="${item.name}" />
       </div>`;
     } else {
       const initials = item.split(' ').map(p => p[0]).join('').slice(0, 2).toUpperCase();
