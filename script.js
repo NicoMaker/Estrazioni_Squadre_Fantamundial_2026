@@ -95,7 +95,7 @@ const CODE_TO_EMOJI = {
 const CODE_TO_FLAGCDN = {
   ES: 'es', AR: 'ar', FR: 'fr', EN: 'gb-eng',
   BR: 'br', PT: 'pt', NL: 'nl', MA: 'ma',
-  BE: 'be', DE: 'de', HR: 'hr', SN: 'sn', IT: 'it',
+  BE: 'be', DE: 'de', HR: 'hr', SN: 'sn', IT: 'it', NO: 'no',
 };
 
 function getFlag(nation) {
