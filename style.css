@@ -543,12 +543,39 @@ body {
   height: 1px;
   background: linear-gradient(90deg, transparent, rgba(255,255,255,.08), transparent);
   pointer-events: none;
+  z-index: 10;
+}
+
+.balls-container-wrap {
+  position: absolute;
+  inset: 0;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(232,255,71,.3) transparent;
+}
+
+.balls-container-wrap::-webkit-scrollbar {
+  width: 6px;
+}
+
+.balls-container-wrap::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.balls-container-wrap::-webkit-scrollbar-thumb {
+  background: rgba(232,255,71,.25);
+  border-radius: 3px;
+}
+
+.balls-container-wrap::-webkit-scrollbar-thumb:hover {
+  background: rgba(232,255,71,.4);
 }
 
 .balls-container {
-  position: absolute;
-  inset: 0;
+  position: relative;
   padding: 10px;
+  min-height: 100%;
 }
 
 .ball {
