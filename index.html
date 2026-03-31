@@ -4,206 +4,194 @@
     <meta charset="UTF-8" />
     <title>World Cup Draw 2026</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,400;0,600;0,700;0,800;0,900;1,800&family=Barlow:wght@400;500;600&display=swap"
-      rel="stylesheet"
-    />
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
-    <div class="noise"></div>
+    <canvas id="bgCanvas"></canvas>
+    <div class="scanlines"></div>
 
     <header class="topbar" id="topbar">
       <div class="topbar-inner">
         <div class="topbar-brand">
-          <span class="topbar-trophy">⚽</span>
-          <div class="topbar-text">
-            <span class="topbar-title">WORLD CUP DRAW</span>
-            <span class="topbar-year">FIFA 2026</span>
+          <div class="brand-mark">
+            <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="16" cy="16" r="15" stroke="currentColor" stroke-width="1.5"/>
+              <path d="M16 4 L16 28 M4 16 L28 16" stroke="currentColor" stroke-width="1.5" opacity=".4"/>
+              <path d="M8 8 Q16 12 24 8 Q20 16 24 24 Q16 20 8 24 Q12 16 8 8Z" stroke="currentColor" stroke-width="1" fill="none" opacity=".6"/>
+            </svg>
           </div>
-          <div class="topbar-flags">
-            <img
-              class="tf-img"
-              src="https://flagcdn.com/w20/us.png"
-              alt="USA"
-            />
-            <img
-              class="tf-img"
-              src="https://flagcdn.com/w20/ca.png"
-              alt="Canada"
-            />
-            <img
-              class="tf-img"
-              src="https://flagcdn.com/w20/mx.png"
-              alt="Mexico"
-            />
+          <div class="topbar-text">
+            <span class="topbar-title">WORLD CUP</span>
+            <span class="topbar-year">FIFA · 2026</span>
           </div>
         </div>
-        <div class="topbar-stats">
-          <div class="topbar-stat">
-            <span class="ts-icon">👤</span>
-            <span class="ts-val" id="c1">0</span>
-            <span class="ts-lbl">Giocatori</span>
+
+        <nav class="topbar-stats">
+          <div class="stat-pill">
+            <span class="stat-val" id="c1">0</span>
+            <span class="stat-lbl">giocatori</span>
           </div>
-          <div class="ts-sep"></div>
-          <div class="topbar-stat">
-            <span class="ts-icon">🏆</span>
-            <span class="ts-val" id="c2">0</span>
-            <span class="ts-lbl">Nazionali</span>
+          <div class="stat-divider"></div>
+          <div class="stat-pill">
+            <span class="stat-val" id="c2">0</span>
+            <span class="stat-lbl">nazionali</span>
           </div>
-          <div class="ts-sep"></div>
-          <div class="topbar-stat">
-            <span class="ts-icon">🎲</span>
-            <span class="ts-val" id="c3">0</span>
-            <span class="ts-lbl">Estratti</span>
+          <div class="stat-divider"></div>
+          <div class="stat-pill">
+            <span class="stat-val" id="c3">0</span>
+            <span class="stat-lbl">estratti</span>
           </div>
+        </nav>
+
+        <div class="host-flags">
+          <img src="https://flagcdn.com/w20/us.png" alt="USA" />
+          <img src="https://flagcdn.com/w20/ca.png" alt="Canada" />
+          <img src="https://flagcdn.com/w20/mx.png" alt="Mexico" />
         </div>
       </div>
-      <div class="topbar-progress">
-        <div class="topbar-progress-bar" id="progressBar"></div>
+      <div class="progress-track">
+        <div class="progress-fill" id="progressBar"></div>
       </div>
     </header>
 
-    <div class="page-wrap">
+    <main class="page-wrap">
       <div class="container">
+
+        <!-- HERO -->
         <section class="hero">
-          <div class="hero-eyebrow">
-            <span class="eyebrow-dot"></span>
-            SORTEGGIO UFFICIALE
-            <span class="eyebrow-dot"></span>
-          </div>
+          <div class="hero-tag">⚽ sorteggio ufficiale</div>
           <h1 class="hero-title">
-            <span class="ht-world">WORLD</span>
-            <span class="ht-cup">CUP</span>
-            <span class="ht-draw">DRAW</span>
+            <em>WORLD</em>
+            <strong>CUP</strong>
+            <em>DRAW</em>
           </h1>
-          <p class="hero-sub">
-            Coppa del Mondo FIFA 2026 · USA · Canada · Messico
-          </p>
-          <div class="hero-flags">
-            <div class="hf-item">
-              <img
-                class="hf-img"
-                src="https://flagcdn.com/w80/us.png"
-                alt="USA"
-              />
-              <span class="hf-label">USA</span>
+          <p class="hero-meta">Coppa del Mondo FIFA 2026 · USA · Canada · Messico</p>
+          <div class="host-trio">
+            <div class="host-item">
+              <img src="https://flagcdn.com/w80/us.png" alt="USA" />
+              <span>United States</span>
             </div>
-            <div class="hf-item">
-              <img
-                class="hf-img"
-                src="https://flagcdn.com/w80/ca.png"
-                alt="Canada"
-              />
-              <span class="hf-label">Canada</span>
+            <div class="host-item">
+              <img src="https://flagcdn.com/w80/ca.png" alt="Canada" />
+              <span>Canada</span>
             </div>
-            <div class="hf-item">
-              <img
-                class="hf-img"
-                src="https://flagcdn.com/w80/mx.png"
-                alt="Messico"
-              />
-              <span class="hf-label">Messico</span>
+            <div class="host-item">
+              <img src="https://flagcdn.com/w80/mx.png" alt="México" />
+              <span>México</span>
             </div>
           </div>
         </section>
 
-        <div class="draw-btn-wrap">
+        <!-- DRAW BUTTON -->
+        <div class="draw-zone">
           <button id="btnDraw" class="btn-draw">
-            <span class="btn-draw-inner">
-              <span class="btn-dice">🎲</span>
-              <span class="btn-label">ESTRAI</span>
+            <span class="btn-bg"></span>
+            <span class="btn-content">
+              <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/>
+              </svg>
+              ESTRAI
             </span>
-            <span class="btn-shimmer"></span>
-            <span class="btn-ring"></span>
+            <span class="btn-glow"></span>
           </button>
-          <p class="draw-hint" id="drawHint">
-            Premi per estrarre il prossimo abbinamento
-          </p>
+          <p class="draw-hint" id="drawHint">Premi per estrarre il prossimo abbinamento</p>
         </div>
 
-        <div class="result-reveal" id="resultReveal">
-          <div class="rr-card rr-player">
-            <div class="rr-label">GIOCATORE ESTRATTO</div>
-            <div class="rr-value" id="playerResult">—</div>
-          </div>
-          <div class="rr-vs">
-            <div class="rr-vs-line"></div>
-            <div class="rr-vs-badge">VS</div>
-            <div class="rr-vs-line"></div>
-          </div>
-          <div class="rr-card rr-nation">
-            <div class="rr-label">NAZIONALE ASSEGNATA</div>
-            <div class="rr-value rr-nation-val">
-              <span class="flag-emoji-real flag-emoji-lg" id="resultFlagSpan"
-                >🏳️</span
-              >
-              <span id="nationResult">—</span>
+        <!-- RESULT -->
+        <div class="result-card" id="resultReveal">
+          <div class="result-inner">
+            <div class="result-side result-player-side">
+              <span class="result-eyebrow">giocatore estratto</span>
+              <span class="result-name" id="playerResult">—</span>
             </div>
-          </div>
-        </div>
-
-        <div class="draw-layout">
-          <div class="urn-section" id="urnPlayers">
-            <div class="urn-head">
-              <div class="urn-title"><span>👤</span> Giocatori</div>
-              <div class="urn-badge" id="c1b">0</div>
-            </div>
-            <div class="urn-visual">
-              <div class="urn-glow ug-gold"></div>
-              <div class="urn-glass">
-                <div class="urn-glare"></div>
-                <div class="balls-container" id="playersBalls"></div>
-                <div class="urn-fade"></div>
+            <div class="result-center">
+              <div class="vs-ring">
+                <span>VS</span>
               </div>
             </div>
-            <div class="urn-list">
-              <div class="ul-head">In urna</div>
-              <div id="playersList" class="ul-body"></div>
+            <div class="result-side result-nation-side">
+              <span class="result-eyebrow">nazionale assegnata</span>
+              <div class="result-nation-wrap">
+                <img class="result-flag-img" id="resultFlagSpan" src="" alt="" />
+                <span class="result-name" id="nationResult">—</span>
+              </div>
+            </div>
+          </div>
+          <div class="result-shimmer"></div>
+        </div>
+
+        <!-- URNE -->
+        <div class="urns-grid">
+          <div class="urn-panel" id="urnPlayers">
+            <div class="urn-header">
+              <div class="urn-label">
+                <span class="urn-icon">👤</span>
+                <span>Giocatori</span>
+              </div>
+              <span class="urn-count" id="c1b">0</span>
+            </div>
+            <div class="urn-vessel">
+              <div class="vessel-bg"></div>
+              <div class="balls-container" id="playersBalls"></div>
+              <div class="vessel-sheen"></div>
+            </div>
+            <div class="urn-roster">
+              <div class="roster-head">In urna</div>
+              <div id="playersList" class="roster-body"></div>
             </div>
           </div>
 
-          <div class="urn-section" id="urnNations">
-            <div class="urn-head">
-              <div class="urn-title"><span>🏆</span> Nazionali</div>
-              <div class="urn-badge" id="c2b">0</div>
-            </div>
-            <div class="urn-visual">
-              <div class="urn-glow ug-blue"></div>
-              <div class="urn-glass">
-                <div class="urn-glare"></div>
-                <div class="balls-container" id="nationsBalls"></div>
-                <div class="urn-fade"></div>
+          <div class="urn-panel" id="urnNations">
+            <div class="urn-header">
+              <div class="urn-label">
+                <span class="urn-icon">🏆</span>
+                <span>Nazionali</span>
               </div>
+              <span class="urn-count" id="c2b">0</span>
             </div>
-            <div class="urn-list">
-              <div class="ul-head">In urna</div>
-              <div id="nationsList" class="ul-body"></div>
+            <div class="urn-vessel">
+              <div class="vessel-bg"></div>
+              <div class="balls-container" id="nationsBalls"></div>
+              <div class="vessel-sheen"></div>
+            </div>
+            <div class="urn-roster">
+              <div class="roster-head">In urna</div>
+              <div id="nationsList" class="roster-body"></div>
             </div>
           </div>
         </div>
 
+        <!-- HISTORY -->
         <section class="history-section">
-          <div class="history-head">
-            <div class="history-title-row">
-              <h2>📋 Cronologia</h2>
-              <span class="hcount" id="historyCount">0 estrazioni</span>
+          <div class="history-header">
+            <div class="history-title">
+              <span class="history-icon">◈</span>
+              <h2>Cronologia</h2>
+              <span class="history-badge" id="historyCount">0 estrazioni</span>
             </div>
-            <div class="history-btns">
-              <button class="btn-wa" id="btnWa">📱 WhatsApp</button>
-              <button class="btn-reset" onclick="resetApp()">🔄 Reset</button>
+            <div class="history-actions">
+              <button class="btn-wa" id="btnWa">
+                <svg viewBox="0 0 24 24" fill="currentColor" width="14" height="14"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.123.553 4.116 1.521 5.845L0 24l6.335-1.503A11.933 11.933 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.885 0-3.652-.51-5.17-1.4l-.37-.22-3.763.893.944-3.668-.242-.382A9.952 9.952 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg>
+                WhatsApp
+              </button>
+              <button class="btn-reset" onclick="resetApp()">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 .49-3.01"/></svg>
+                Reset
+              </button>
             </div>
           </div>
+
           <div id="historyList" class="history-list"></div>
           <div class="history-empty" id="historyEmpty">
             Nessuna estrazione — premi <strong>ESTRAI</strong> per iniziare ⚽
           </div>
         </section>
+
       </div>
-    </div>
+    </main>
 
     <div class="flash-overlay" id="flashOverlay"></div>
-
     <script src="script.js"></script>
   </body>
 </html>
