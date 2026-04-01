@@ -4,7 +4,10 @@
     <meta charset="UTF-8" />
     <title>World Cup Draw 2026</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link href="https://fonts.googleapis.com/css2?family=Anton&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Anton&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
@@ -15,10 +18,31 @@
       <div class="topbar-inner">
         <div class="topbar-brand">
           <div class="brand-mark">
-            <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <circle cx="16" cy="16" r="15" stroke="currentColor" stroke-width="1.5"/>
-              <path d="M16 4 L16 28 M4 16 L28 16" stroke="currentColor" stroke-width="1.5" opacity=".4"/>
-              <path d="M8 8 Q16 12 24 8 Q20 16 24 24 Q16 20 8 24 Q12 16 8 8Z" stroke="currentColor" stroke-width="1" fill="none" opacity=".6"/>
+            <svg
+              viewBox="0 0 32 32"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <circle
+                cx="16"
+                cy="16"
+                r="15"
+                stroke="currentColor"
+                stroke-width="1.5"
+              />
+              <path
+                d="M16 4 L16 28 M4 16 L28 16"
+                stroke="currentColor"
+                stroke-width="1.5"
+                opacity=".4"
+              />
+              <path
+                d="M8 8 Q16 12 24 8 Q20 16 24 24 Q16 20 8 24 Q12 16 8 8Z"
+                stroke="currentColor"
+                stroke-width="1"
+                fill="none"
+                opacity=".6"
+              />
             </svg>
           </div>
           <div class="topbar-text">
@@ -57,7 +81,6 @@
 
     <main class="page-wrap">
       <div class="container">
-
         <!-- HERO -->
         <section class="hero">
           <div class="hero-tag">⚽ sorteggio ufficiale</div>
@@ -66,7 +89,9 @@
             <strong>CUP</strong>
             <em>DRAW</em>
           </h1>
-          <p class="hero-meta">Coppa del Mondo FIFA 2026 · USA · Canada · Messico</p>
+          <p class="hero-meta">
+            Coppa del Mondo FIFA 2026 · USA · Canada · Messico
+          </p>
           <div class="host-trio">
             <div class="host-item">
               <img src="https://flagcdn.com/w80/us.png" alt="USA" />
@@ -88,23 +113,34 @@
           <button id="btnDraw" class="btn-draw">
             <span class="btn-bg"></span>
             <span class="btn-content">
-              <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/>
+              <svg
+                class="btn-icon"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <path d="M12 2L2 7l10 5 10-5-10-5z" />
+                <path d="M2 17l10 5 10-5" />
+                <path d="M2 12l10 5 10-5" />
               </svg>
               ESTRAI
             </span>
             <span class="btn-glow"></span>
           </button>
-          <p class="draw-hint" id="drawHint">Premi per estrarre il prossimo abbinamento</p>
+          <p class="draw-hint" id="drawHint">
+            Premi per estrarre il prossimo abbinamento
+          </p>
         </div>
 
         <!-- RESULT -->
         <div class="result-card" id="resultReveal">
           <div class="result-inner">
             <div class="result-side result-player-side">
-              <span class="result-eyebrow">giocatore estratto</span>
+              <span class="result-eyebrow">Fantaalenatore estratto</span>
               <span class="result-name" id="playerResult">—</span>
-
+              <br />
+              <br />
             </div>
             <div class="result-center">
               <div class="vs-ring">
@@ -114,10 +150,19 @@
             <div class="result-side result-nation-side">
               <span class="result-eyebrow">nazionale assegnata</span>
               <div class="result-nation-wrap">
-                <img class="result-flag-img" id="resultFlagSpan" src="" alt="" />
+                <img
+                  class="result-flag-img"
+                  id="resultFlagSpan"
+                  src=""
+                  alt=""
+                />
                 <span class="result-name" id="nationResult">—</span>
               </div>
-              <span class="result-representative" id="resultRepresentative" style="display:none"></span>
+              <span
+                class="result-representative"
+                id="resultRepresentative"
+                style="display: none"
+              ></span>
             </div>
           </div>
           <div class="result-shimmer"></div>
@@ -178,11 +223,33 @@
             </div>
             <div class="history-actions">
               <button class="btn-wa" id="btnWa">
-                <svg viewBox="0 0 24 24" fill="currentColor" width="14" height="14"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.123.553 4.116 1.521 5.845L0 24l6.335-1.503A11.933 11.933 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.885 0-3.652-.51-5.17-1.4l-.37-.22-3.763.893.944-3.668-.242-.382A9.952 9.952 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg>
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                  width="14"
+                  height="14"
+                >
+                  <path
+                    d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"
+                  />
+                  <path
+                    d="M12 0C5.373 0 0 5.373 0 12c0 2.123.553 4.116 1.521 5.845L0 24l6.335-1.503A11.933 11.933 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.885 0-3.652-.51-5.17-1.4l-.37-.22-3.763.893.944-3.668-.242-.382A9.952 9.952 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"
+                  />
+                </svg>
                 WhatsApp
               </button>
               <button class="btn-reset" onclick="resetApp()">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 .49-3.01"/></svg>
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  width="14"
+                  height="14"
+                >
+                  <polyline points="1 4 1 10 7 10" />
+                  <path d="M3.51 15a9 9 0 1 0 .49-3.01" />
+                </svg>
                 Reset
               </button>
             </div>
@@ -193,7 +260,6 @@
             Nessuna estrazione — premi <strong>ESTRAI</strong> per iniziare ⚽
           </div>
         </section>
-
       </div>
     </main>
 
@@ -201,37 +267,52 @@
     <script src="script.js"></script>
     <style>
       /* Nation list item with representative */
-      .list-item-nation { align-items: center; gap: 8px; }
-      .list-nation-info { display: flex; flex-direction: column; gap: 1px; }
-      .list-nation-name { font-size: .78rem; color: rgba(240,244,255,.65); }
+      .list-item-nation {
+        align-items: center;
+        gap: 8px;
+      }
+      .list-nation-info {
+        display: flex;
+        flex-direction: column;
+        gap: 1px;
+      }
+      .list-nation-name {
+        font-size: 0.78rem;
+        color: rgba(240, 244, 255, 0.65);
+      }
       .list-rep-name {
         font-family: var(--font-m);
-        font-size: .6rem;
+        font-size: 0.6rem;
         color: var(--accent);
-        opacity: .85;
-        letter-spacing: .3px;
+        opacity: 0.85;
+        letter-spacing: 0.3px;
       }
 
       /* Result card representative */
       .result-representative {
         font-family: var(--font-m);
-        font-size: .65rem;
+        font-size: 0.65rem;
         letter-spacing: 1px;
         color: var(--accent);
-        background: rgba(232,255,71,.08);
-        border: 1px solid rgba(232,255,71,.22);
+        background: rgba(232, 255, 71, 0.08);
+        border: 1px solid rgba(232, 255, 71, 0.22);
         border-radius: 999px;
         padding: 4px 12px;
         margin-top: 4px;
       }
 
       /* History nation info */
-      .history-nation-info { display: flex; flex-direction: column; gap: 1px; overflow: hidden; }
+      .history-nation-info {
+        display: flex;
+        flex-direction: column;
+        gap: 1px;
+        overflow: hidden;
+      }
       .history-rep {
         font-family: var(--font-m);
-        font-size: .62rem;
+        font-size: 0.62rem;
         color: var(--accent);
-        opacity: .8;
+        opacity: 0.8;
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
