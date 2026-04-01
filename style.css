@@ -450,6 +450,20 @@ body {
   color: var(--accent);
 }
 
+.result-badge {
+  font-family: var(--font-m);
+  font-size: .58rem;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  background: rgba(232,255,71,.15);
+  border: 1px solid rgba(232,255,71,.3);
+  border-radius: var(--r-pill);
+  padding: 4px 10px;
+  color: var(--accent);
+  display: inline-block;
+  margin-top: 6px;
+}
+
 .result-center {
   display: flex;
   justify-content: center;

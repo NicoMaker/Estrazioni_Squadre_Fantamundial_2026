@@ -18,74 +18,86 @@
       "name": "Spagna",
       "code": "ES",
       "flag": "🇪🇸",
-      "colors": ["#AA151B", "#F1BF00", "#AA151B"]
+      "colors": ["#AA151B", "#F1BF00", "#AA151B"],
+      "representative": "Lamine Yamal"
     },
     {
       "name": "Argentina",
       "code": "AR",
       "flag": "🇦🇷",
-      "colors": ["#74ACDF", "#FFFFFF", "#74ACDF"]
+      "colors": ["#74ACDF", "#FFFFFF", "#74ACDF"],
+      "representative": "Lionel Messi"
     },
     {
       "name": "Francia",
       "code": "FR",
       "flag": "🇫🇷",
-      "colors": ["#002395", "#FFFFFF", "#ED2939"]
+      "colors": ["#002395", "#FFFFFF", "#ED2939"],
+      "representative": "Kylian Mbappé"
     },
     {
       "name": "Inghilterra",
       "code": "EN",
       "flag": "EN",
       "colors": ["#FFFFFF", "#CE1124", "#FFFFFF"],
-      "england": true
+      "england": true,
+      "representative": "Harry Kane"
     },
     {
       "name": "Brasile",
       "code": "BR",
       "flag": "🇧🇷",
-      "colors": ["#009c3b", "#FFDF00", "#009c3b"]
+      "colors": ["#009c3b", "#FFDF00", "#009c3b"],
+      "representative": "Vinícius Jr."
     },
     {
       "name": "Portogallo",
       "code": "PT",
       "flag": "🇵🇹",
-      "colors": ["#006600", "#FF0000", "#FF0000"]
+      "colors": ["#006600", "#FF0000", "#FF0000"],
+      "representative": "Cristiano Ronaldo"
     },
     {
       "name": "Olanda",
       "code": "NL",
       "flag": "🇳🇱",
-      "colors": ["#D0002A", "#FFFFFF", "#0077A8"]
+      "colors": ["#D0002A", "#FFFFFF", "#0077A8"],
+      "representative": "Virgil van Dijk"
     },
     {
       "name": "Marocco",
       "code": "MA",
       "flag": "🇲🇦",
-      "colors": ["#C1272D", "#C1272D", "#C1272D"]
+      "colors": ["#C1272D", "#C1272D", "#C1272D"],
+      "representative": "Achraf Hakimi"
     },
     {
       "name": "Belgio",
       "code": "BE",
       "flag": "🇧🇪",
-      "colors": ["#000000", "#FFD935", "#EF3340"]
+      "colors": ["#000000", "#FFD935", "#EF3340"],
+      "representative": "Kevin De Bruyne"
     },
     {
       "name": "Germania",
       "code": "DE",
       "flag": "🇩🇪",
-      "colors": ["#000000", "#DD0000", "#FFCE00"]
+      "colors": ["#000000", "#DD0000", "#FFCE00"],
+      "representative": "Florian Wirtz"
     },
     {
       "name": "Croazia",
       "code": "HR",
       "flag": "🇭🇷",
-      "colors": ["#FF0000", "#FFFFFF", "#171796"]
+      "colors": ["#FF0000", "#FFFFFF", "#171796"],
+      "representative": "Luka Modrić"
     },
     {
       "name": "Norvegia",
       "code": "NO",
       "flag": "🇳🇴",
-      "colors": ["#EF2B2D", "#FFFFFF", "#002868"]
+      "colors": ["#EF2B2D", "#FFFFFF", "#002868"],
+      "representative": "Erling Haaland"
     }
   ]
 }

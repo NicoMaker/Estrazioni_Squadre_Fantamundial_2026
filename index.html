@@ -104,6 +104,7 @@
             <div class="result-side result-player-side">
               <span class="result-eyebrow">giocatore estratto</span>
               <span class="result-name" id="playerResult">—</span>
+              <span class="result-badge" id="representativeBadge"></span>
             </div>
             <div class="result-center">
               <div class="vs-ring">
@@ -116,6 +117,7 @@
                 <img class="result-flag-img" id="resultFlagSpan" src="" alt="" />
                 <span class="result-name" id="nationResult">—</span>
               </div>
+              <span class="result-representative" id="resultRepresentative" style="display:none"></span>
             </div>
           </div>
           <div class="result-shimmer"></div>
@@ -197,5 +199,43 @@
 
     <div class="flash-overlay" id="flashOverlay"></div>
     <script src="script.js"></script>
+    <style>
+      /* Nation list item with representative */
+      .list-item-nation { align-items: center; gap: 8px; }
+      .list-nation-info { display: flex; flex-direction: column; gap: 1px; }
+      .list-nation-name { font-size: .78rem; color: rgba(240,244,255,.65); }
+      .list-rep-name {
+        font-family: var(--font-m);
+        font-size: .6rem;
+        color: var(--accent);
+        opacity: .85;
+        letter-spacing: .3px;
+      }
+
+      /* Result card representative */
+      .result-representative {
+        font-family: var(--font-m);
+        font-size: .65rem;
+        letter-spacing: 1px;
+        color: var(--accent);
+        background: rgba(232,255,71,.08);
+        border: 1px solid rgba(232,255,71,.22);
+        border-radius: 999px;
+        padding: 4px 12px;
+        margin-top: 4px;
+      }
+
+      /* History nation info */
+      .history-nation-info { display: flex; flex-direction: column; gap: 1px; overflow: hidden; }
+      .history-rep {
+        font-family: var(--font-m);
+        font-size: .62rem;
+        color: var(--accent);
+        opacity: .8;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+    </style>
   </body>
 </html>

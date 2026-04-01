@@ -30,8 +30,6 @@ let isDrawing = false;
 
   function draw() {
     ctx.clearRect(0, 0, W, H);
-
-    // Diagonal grid lines
     ctx.strokeStyle = 'rgba(232,255,71,.025)';
     ctx.lineWidth = 1;
     for (let i = -H; i < W + H; i += 90) {
@@ -40,7 +38,6 @@ let isDrawing = false;
       ctx.lineTo(i + H, H);
       ctx.stroke();
     }
-    // Horizontal dots grid
     for (let x = 0; x < W; x += 60) {
       for (let y = 0; y < H; y += 60) {
         ctx.fillStyle = 'rgba(255,255,255,.025)';
@@ -49,21 +46,16 @@ let isDrawing = false;
         ctx.fill();
       }
     }
-
-    // Orbs
     const grad1 = ctx.createRadialGradient(W * .15, H * .3, 0, W * .15, H * .3, 400);
     grad1.addColorStop(0, 'rgba(232,255,71,.06)');
     grad1.addColorStop(1, 'transparent');
     ctx.fillStyle = grad1;
     ctx.fillRect(0, 0, W, H);
-
     const grad2 = ctx.createRadialGradient(W * .85, H * .7, 0, W * .85, H * .7, 350);
     grad2.addColorStop(0, 'rgba(71,255,180,.04)');
     grad2.addColorStop(1, 'transparent');
     ctx.fillStyle = grad2;
     ctx.fillRect(0, 0, W, H);
-
-    // Particles
     particles.forEach(p => {
       ctx.fillStyle = `rgba(232,255,71,${p.o})`;
       ctx.beginPath();
@@ -75,7 +67,6 @@ let isDrawing = false;
       if (p.x < -10) p.x = W + 10;
       if (p.x > W + 10) p.x = -10;
     });
-
     requestAnimationFrame(draw);
   }
 
@@ -101,11 +92,6 @@ const CODE_TO_FLAGCDN = {
 function getFlag(nation) {
   if (typeof nation === 'object') return nation.flag || CODE_TO_EMOJI[nation.code] || '🏳️';
   return '🏳️';
-}
-
-function flagEmoji(code) {
-  const em = CODE_TO_EMOJI[code] || '🏳️';
-  return `<span class="flag-emoji-real">${em}</span>`;
 }
 
 /* ─── DATA LOADING ─── */
@@ -194,10 +180,6 @@ function renderBalls(list, containerId, isNation) {
 
     if (isNation) {
       const fc = CODE_TO_FLAGCDN[item.code] || 'un';
-      const c = item.colors;
-      const grad = c.length === 2
-        ? `linear-gradient(135deg,${c[0]} 50%,${c[1]} 50%)`
-        : `linear-gradient(135deg,${c[0]} 33%,${c[1]} 33%,${c[1]} 66%,${c[2]} 66%)`;
       return `
       <div class="ball ball-nation" style="${base}" title="${item.name}">
         <img class="ball-flag-fill" src="https://flagcdn.com/w40/${fc}.png" alt="${item.name}" />
@@ -232,7 +214,14 @@ function renderLists() {
     nEl.innerHTML = nations.length
       ? nations.map(n => {
           const fc = CODE_TO_FLAGCDN[n.code] || 'un';
-          return `<div class="list-item"><img class="list-flag-img" src="https://flagcdn.com/w40/${fc}.png" alt="${n.name}"/><span>${n.name}</span></div>`;
+          return `
+          <div class="list-item list-item-nation">
+            <img class="list-flag-img" src="https://flagcdn.com/w40/${fc}.png" alt="${n.name}"/>
+            <div class="list-nation-info">
+              <span class="list-nation-name">${n.name}</span>
+              ${n.representative ? `<span class="list-rep-name">⭐ ${n.representative}</span>` : ''}
+            </div>
+          </div>`;
         }).join('')
       : `<div class="list-empty">Nessuna nazionale rimasta</div>`;
   }
@@ -255,7 +244,10 @@ function renderHistory() {
       <div class="history-right">
         <div class="history-nation">
           <img class="list-flag-img" src="https://flagcdn.com/w40/${CODE_TO_FLAGCDN[h.code]||'un'}.png" alt="${h.nation}"/>
-          <span class="history-team">${h.nation}</span>
+          <div class="history-nation-info">
+            <span class="history-team">${h.nation}</span>
+            ${h.representative ? `<span class="history-rep">⭐ ${h.representative}</span>` : ''}
+          </div>
         </div>
       </div>
     </div>`;
@@ -271,13 +263,20 @@ function drawOnce() {
   toggleMixing(true);
   triggerFlash();
   setTimeout(() => {
-    const pIdx = players.length - 1;
+    const pIdx = Math.floor(Math.random() * players.length);
     const nIdx = Math.floor(Math.random() * nations.length);
     const player = players.splice(pIdx, 1)[0];
     const nation = nations.splice(nIdx, 1)[0];
     const flag = getFlag(nation);
-    showResult(player, nation, flag);
-    history.unshift({ player, nation: nation.name, code: nation.code || '', flag, ts: new Date().toISOString() });
+    showResult(player, nation);
+    history.unshift({
+      player,
+      nation: nation.name,
+      code: nation.code || '',
+      flag,
+      representative: nation.representative || '',
+      ts: new Date().toISOString()
+    });
     toggleMixing(false);
     isDrawing = false;
     save();
@@ -290,8 +289,21 @@ function showResult(player, nation) {
   const playerEl = document.getElementById('playerResult');
   const nationEl = document.getElementById('nationResult');
   const flagSpan = document.getElementById('resultFlagSpan');
+  const repEl = document.getElementById('resultRepresentative');
+
   if (playerEl) playerEl.textContent = player;
   if (nationEl) nationEl.textContent = nation.name;
+
+  if (repEl) {
+    if (nation.representative) {
+      repEl.textContent = '⭐ ' + nation.representative;
+      repEl.style.display = 'inline-block';
+    } else {
+      repEl.textContent = '';
+      repEl.style.display = 'none';
+    }
+  }
+
   if (flagSpan) {
     const fc = CODE_TO_FLAGCDN[nation.code];
     if (fc) {
@@ -301,6 +313,7 @@ function showResult(player, nation) {
       flagSpan.src = '';
     }
   }
+
   if (reveal) {
     reveal.classList.remove('visible');
     void reveal.offsetWidth;
@@ -325,7 +338,10 @@ function triggerFlash() {
 /* ─── WHATSAPP ─── */
 function buildWhatsappText() {
   if (history.length === 0) return 'Nessun sorteggio effettuato.';
-  const lines = [...history].reverse().map((h, i) => `${i + 1}. ${h.player} ➜ ${h.nation}`);
+  const lines = [...history].reverse().map((h, i) => {
+    const rep = h.representative ? ` (${h.representative})` : '';
+    return `${i + 1}. ${h.player} ➜ ${h.nation}${rep}`;
+  });
   return `WORLD CUP DRAW — FIFA 2026\nCoppa del Mondo 2026 (USA · CAN · MEX)\n\n${lines.join('\n')}\n\nEstratti: ${history.length} / ${totalPlayers}\nBuona fortuna a tutti!`;
 }
 
