@@ -231,13 +231,11 @@ function renderHistory() {
   const container = document.getElementById('historyList');
   if (!container) return;
   container.innerHTML = history.map((h, i) => {
-    const num = history.length - i;
     return `
     <div class="history-entry">
       <div class="history-left">
         <div class="history-player">
           <span class="history-name">${h.player}</span>
-          <span class="history-num">#${num}</span>
         </div>
       </div>
       <div class="history-arrow">→</div>
