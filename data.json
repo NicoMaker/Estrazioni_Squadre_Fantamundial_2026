@@ -86,12 +86,6 @@
       "code": "NO",
       "flag": "🇳🇴",
       "colors": ["#EF2B2D", "#FFFFFF", "#002868"]
-    },
-    {
-      "name": "Italia",
-      "code": "IT",
-      "flag": "🇮🇹",
-      "colors": ["#009246", "#FFFFFF", "#CE2B37"]
     }
   ]
 }
