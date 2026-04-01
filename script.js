@@ -262,7 +262,25 @@ function drawOnce() {
   if (btn) btn.disabled = true;
   toggleMixing(true);
   triggerFlash();
+
+  // Suspense hint animation
+  const hint = document.getElementById('drawHint');
+  const suspensePhrases = [
+    'Mescolando le urne…',
+    'Estrazione in corso●',
+    'Estrazione in corso●●',
+    'Estrazione in corso●●●',
+    'Chi sarà il fortunato?',
+    'Il destino decide…',
+  ];
+  let sIdx = 0;
+  const suspenseInterval = setInterval(() => {
+    if (hint) hint.textContent = suspensePhrases[sIdx % suspensePhrases.length];
+    sIdx++;
+  }, 500);
+
   setTimeout(() => {
+    clearInterval(suspenseInterval);
     const pIdx = Math.floor(Math.random() * players.length);
     const nIdx = Math.floor(Math.random() * nations.length);
     const player = players.splice(pIdx, 1)[0];
@@ -281,7 +299,7 @@ function drawOnce() {
     isDrawing = false;
     save();
     render();
-  }, 900);
+  }, 3000);
 }
 
 function showResult(player, nation) {
