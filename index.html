@@ -134,38 +134,25 @@
         </div>
 
         <!-- RESULT -->
-        <div class="result-card" id="resultReveal">
-          <div class="result-inner">
-            <div class="result-side result-player-side">
-              <span class="result-eyebrow">Fantaalenatore estratto</span>
-              <span class="result-name" id="playerResult">—</span>
-            </div>
-            <div class="result-center">
-              <div class="vs-ring">
-                <span>VS</span>
-              </div>
-            </div>
-            <div class="result-side result-nation-side">
-              <span class="result-eyebrow">nazionale assegnata</span>
-              <div class="result-nation-wrap">
-                <img
-                  class="result-flag-img"
-                  id="resultFlagSpan"
-                  src=""
-                  alt=""
-                />
-                <div class="result-nation-info">
-                  <span class="result-name" id="nationResult">—</span>
-                  <span
-                    class="result-representative"
-                    id="resultRepresentative"
-                    style="display: none"
-                  ></span>
-                </div>
-              </div>
-            </div>
+        <div class="result-duo" id="resultReveal">
+          <div class="result-half result-half-player">
+            <span class="result-eyebrow">Fantaallenatore estratto</span>
+            <span class="result-half-name" id="playerResult">—</span>
+            <div class="result-shimmer"></div>
           </div>
-          <div class="result-shimmer"></div>
+          <div class="result-vs-col">
+            <div class="vs-ring"><span>VS</span></div>
+          </div>
+          <div class="result-half result-half-nation">
+            <span class="result-eyebrow">Nazionale assegnata</span>
+            <div class="result-nation-row">
+              <div class="result-flag-circle">
+                <img class="result-half-flag" id="resultFlagSpan" src="" alt="" />
+              </div>
+              <span class="result-half-name result-nation-name" id="nationResult">—</span>
+            </div>
+            <div class="result-shimmer"></div>
+          </div>
         </div>
 
         <!-- URNE -->
@@ -262,6 +249,18 @@
         </section>
       </div>
     </main>
+
+    <!-- REPRESENTATIVES PANEL -->
+    <div class="rep-panel" id="repPanel" style="display:none">
+      <div class="rep-panel-inner">
+        <div class="rep-panel-header">
+          <span class="rep-panel-icon">⭐</span>
+          <span class="rep-panel-title">Giocatori Rappresentativi</span>
+          <span class="rep-panel-badge" id="repBadge">0</span>
+        </div>
+        <div class="rep-grid" id="repGrid"></div>
+      </div>
+    </div>
 
     <div class="flash-overlay" id="flashOverlay"></div>
     <script src="script.js"></script>

@@ -153,6 +153,7 @@ function render() {
   renderBalls(nations, 'nationsBalls', true);
   renderLists();
   renderHistory();
+  renderRepresentatives();
 
   const btn = document.getElementById('btnDraw');
   if (btn) btn.disabled = players.length === 0 || nations.length === 0 || isDrawing;
@@ -225,6 +226,36 @@ function renderLists() {
         }).join('')
       : `<div class="list-empty">Nessuna nazionale rimasta</div>`;
   }
+}
+
+function renderRepresentatives() {
+  const panel = document.getElementById('repPanel');
+  const grid = document.getElementById('repGrid');
+  const badge = document.getElementById('repBadge');
+  if (!panel || !grid) return;
+
+  const reps = history.filter(h => h.representative);
+  if (reps.length === 0) {
+    panel.style.display = 'none';
+    return;
+  }
+  panel.style.display = 'block';
+  document.body.classList.add('has-rep-panel');
+  if (badge) badge.textContent = reps.length;
+
+  grid.innerHTML = reps.map(h => {
+    const fc = CODE_TO_FLAGCDN[h.code] || 'un';
+    return `
+    <div class="rep-card">
+      <div class="rep-flag-circle">
+        <img src="https://flagcdn.com/w40/${fc}.png" alt="${h.nation}" />
+      </div>
+      <div class="rep-info">
+        <span class="rep-nation">${h.nation}</span>
+        <span class="rep-name">⭐ ${h.representative}</span>
+      </div>
+    </div>`;
+  }).join('');
 }
 
 function renderHistory() {
@@ -310,15 +341,7 @@ function showResult(player, nation) {
   if (playerEl) playerEl.textContent = player;
   if (nationEl) nationEl.textContent = nation.name;
 
-  if (repEl) {
-    if (nation.representative) {
-      repEl.textContent = '⭐ ' + nation.representative;
-      repEl.style.display = 'inline-block';
-    } else {
-      repEl.textContent = '';
-      repEl.style.display = 'none';
-    }
-  }
+  // representative now shown in bottom panel only
 
   if (flagSpan) {
     const fc = CODE_TO_FLAGCDN[nation.code];
