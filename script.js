@@ -7,7 +7,7 @@ let isDrawing = false;
 
 let ytPlayer = null;
 let ytReady = false;
-const YT_VIDEO_ID = 'SP0RCMtfm4o';
+const YT_VIDEO_ID = 'AbyXIy_KtDk';
 
 function initYouTube() {
   const tag = document.createElement('script');
@@ -372,7 +372,7 @@ function drawOnce() {
     isDrawing = false;
     save();
     render();
-  }, 10000);
+  }, 31000);
 }
 
 function showResult(player, nation) {
