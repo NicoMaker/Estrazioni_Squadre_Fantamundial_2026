@@ -40,9 +40,13 @@ window.onYouTubeIframeAPIReady = function () {
 function playSuspenseMusic() {
   if (ytReady && ytPlayer) {
     try {
-      ytPlayer.seekTo(0);
+      // loadVideoById forza il riavvio del video da capo ogni volta
+      ytPlayer.loadVideoById({ videoId: YT_VIDEO_ID, startSeconds: 0 });
       ytPlayer.setVolume(80);
-      ytPlayer.playVideo();
+      // playVideo viene chiamato dopo un breve delay per dare tempo al load
+      setTimeout(() => {
+        try { ytPlayer.playVideo(); } catch (e) {}
+      }, 300);
     } catch (e) { console.warn('YT play error', e); }
   }
 }
@@ -50,8 +54,7 @@ function playSuspenseMusic() {
 function stopSuspenseMusic() {
   if (ytReady && ytPlayer) {
     try {
-      ytPlayer.pauseVideo();
-      ytPlayer.seekTo(0);
+      ytPlayer.stopVideo();
     } catch (e) { console.warn('YT stop error', e); }
   }
 }
@@ -369,7 +372,7 @@ function drawOnce() {
     isDrawing = false;
     save();
     render();
-  }, 3000);
+  }, 10000);
 }
 
 function showResult(player, nation) {
