@@ -9,8 +9,22 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="style.css" />
+    <style>
+      #ytPlayerContainer {
+        position: fixed;
+        bottom: -10px;
+        right: -10px;
+        width: 1px;
+        height: 1px;
+        opacity: 0;
+        pointer-events: none;
+        z-index: -1;
+      }
+    </style>
   </head>
   <body>
+    <div id="ytPlayerContainer"></div>
+
     <canvas id="bgCanvas"></canvas>
     <div class="scanlines"></div>
 
@@ -81,7 +95,6 @@
 
     <main class="page-wrap">
       <div class="container">
-        <!-- HERO -->
         <section class="hero">
           <div class="hero-tag">⚽ sorteggio ufficiale</div>
           <h1 class="hero-title">
@@ -108,7 +121,6 @@
           </div>
         </section>
 
-        <!-- DRAW BUTTON -->
         <div class="draw-zone">
           <button id="btnDraw" class="btn-draw">
             <span class="btn-bg"></span>
@@ -133,7 +145,6 @@
           </p>
         </div>
 
-        <!-- RESULT -->
         <div class="result-duo" id="resultReveal">
           <div class="result-half result-half-player">
             <span class="result-eyebrow">Fantaallenatore estratto</span>
@@ -155,7 +166,6 @@
           </div>
         </div>
 
-        <!-- URNE -->
         <div class="urns-grid">
           <div class="urn-panel" id="urnPlayers">
             <div class="urn-header">
@@ -200,7 +210,6 @@
           </div>
         </div>
 
-        <!-- HISTORY -->
         <section class="history-section">
           <div class="history-header">
             <div class="history-title">
@@ -250,7 +259,6 @@
       </div>
     </main>
 
-    <!-- REPRESENTATIVES PANEL -->
     <div class="rep-panel" id="repPanel" style="display:none">
       <div class="rep-panel-inner">
         <div class="rep-panel-header">

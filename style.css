@@ -49,7 +49,6 @@ body {
   overflow-x: hidden;
 }
 
-/* ── BACKGROUND CANVAS ── */
 #bgCanvas {
   position: fixed;
   inset: 0;
@@ -72,7 +71,6 @@ body {
   );
 }
 
-/* ── TOPBAR ── */
 .topbar {
   position: fixed;
   top: 0;
@@ -310,7 +308,6 @@ body {
   color: var(--muted);
 }
 
-/* ── DRAW BUTTON ── */
 .draw-zone {
   text-align: center;
   margin-bottom: 32px;
@@ -400,7 +397,6 @@ body {
   letter-spacing: 0.5px;
 }
 
-/* ── RESULT DUO ── */
 .result-duo {
   display: grid;
   grid-template-columns: 1fr 80px 1fr;
@@ -491,18 +487,6 @@ body {
   justify-content: center;
   gap: 10px;
 }
-.result-vs-col .result-representative {
-  font-family: var(--font-m);
-  font-size: 0.62rem;
-  letter-spacing: 0.5px;
-  color: var(--accent-green);
-  background: rgba(76, 175, 80, 0.1);
-  border: 1px solid rgba(76, 175, 80, 0.3);
-  border-radius: 999px;
-  padding: 5px 12px;
-  white-space: nowrap;
-  text-align: center;
-}
 
 /* ── RESULT CARD (legacy, keep for shimmer ref) ── */
 .result-card {
@@ -534,57 +518,6 @@ body {
   pointer-events: auto;
 }
 
-.result-inner {
-  display: grid;
-  grid-template-columns: 1fr 100px 1fr;
-  align-items: stretch;
-  padding: 32px 28px;
-  gap: 0;
-}
-
-.result-side {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  justify-content: center;
-}
-.result-player-side {
-  align-items: flex-end;
-  text-align: right;
-}
-.result-nation-side {
-  align-items: flex-start;
-  text-align: left;
-}
-.result-nation-wrap {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-.result-nation-info {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-  align-items: flex-start;
-}
-.result-name {
-  font-family: var(--font-d);
-  font-size: clamp(1.4rem, 4vw, 2.5rem);
-  letter-spacing: 1px;
-  color: var(--white);
-  line-height: 1;
-}
-.result-player-wrap {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-.result-player-info {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-  align-items: flex-end;
-}
 .result-eyebrow {
   font-family: var(--font-m);
   font-size: 0.6rem;
@@ -626,28 +559,8 @@ body {
   flex-shrink: 0;
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.4);
 }
-.result-flag {
-  font-size: clamp(2rem, 6vw, 3.5rem);
-  line-height: 1;
-  font-family:
-    "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", sans-serif;
-}
 #nationResult {
   color: var(--accent);
-}
-
-.result-badge {
-  font-family: var(--font-m);
-  font-size: 0.58rem;
-  letter-spacing: 1px;
-  text-transform: uppercase;
-  background: rgba(255, 215, 0, 0.15);
-  border: 1px solid rgba(255, 215, 0, 0.3);
-  border-radius: var(--r-pill);
-  padding: 4px 10px;
-  color: var(--accent);
-  display: inline-block;
-  margin-top: 6px;
 }
 
 .result-representative {
@@ -834,32 +747,6 @@ body {
   z-index: 20;
 }
 
-.ball-england {
-  background: #fff !important;
-  position: relative;
-}
-.eng-cross-bg {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  border-radius: 50%;
-  overflow: hidden;
-}
-.ball-code-en-text {
-  position: relative;
-  z-index: 2;
-  font-family: var(--font-d);
-  font-size: 7px;
-  font-weight: 900;
-  color: #ce1124 !important;
-  text-shadow: none;
-  background: rgba(255, 255, 255, 0.75);
-  border-radius: 2px;
-  padding: 1px 2px;
-  line-height: 1;
-}
-
 .ball-nation {
   flex-direction: column;
   gap: 1px;
@@ -900,29 +787,6 @@ body {
   position: relative;
   z-index: 2;
 }
-.ball-code-en {
-  position: absolute !important;
-  font-family: var(--font-d);
-  font-size: 8px;
-  font-weight: 900;
-  color: #ce1124 !important;
-  background: rgba(255, 255, 255, 0.9);
-  border-radius: 3px;
-  padding: 1px 2px;
-  text-shadow: none !important;
-  z-index: 10;
-}
-.ball-england {
-  background: #fff;
-}
-.ball-england .eng-cross {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  border-radius: 50%;
-  overflow: hidden;
-}
 
 @keyframes realMix {
   0% {
@@ -948,7 +812,6 @@ body {
   animation-delay: var(--delay);
 }
 
-/* ── ROSTER LIST ── */
 .urn-roster {
   background: var(--ink);
   border: 1px solid var(--line);
@@ -1025,16 +888,6 @@ body {
   color: var(--accent-green);
   opacity: 0.85;
   letter-spacing: 0.3px;
-}
-
-.flag-emoji-real {
-  font-size: 1.2rem;
-  line-height: 1;
-  flex-shrink: 0;
-  display: inline-flex;
-  align-items: center;
-  font-family:
-    "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", sans-serif;
 }
 
 /* ── HISTORY ── */
@@ -1239,7 +1092,6 @@ body {
   color: var(--muted);
 }
 
-/* ── FLASH ── */
 .flash-overlay {
   position: fixed;
   inset: 0;
@@ -1253,21 +1105,15 @@ body {
   opacity: 1;
 }
 
-/* ── RESPONSIVE ── */
 @media (max-width: 780px) {
   .urns-grid {
     grid-template-columns: 1fr;
   }
-  .result-inner {
+  .result-duo {
     grid-template-columns: 1fr;
-    gap: 16px;
+    gap: 8px;
   }
-  .result-player-side,
-  .result-nation-side {
-    align-items: center;
-    text-align: center;
-  }
-  .result-center {
+  .result-vs-col {
     flex-direction: row;
   }
   .vs-ring {
@@ -1331,7 +1177,6 @@ body {
   }
 }
 
-/* ── REPRESENTATIVES PANEL ── */
 .rep-panel {
   position: fixed;
   bottom: 0;
@@ -1424,7 +1269,7 @@ body {
   color: var(--accent-green);
   letter-spacing: 0.3px;
 }
-/* push page content above the fixed panel when visible */
+
 body.has-rep-panel .page-wrap {
   padding-bottom: 110px;
 }

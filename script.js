@@ -5,7 +5,57 @@ let totalPlayers = 0;
 let totalNations = 0;
 let isDrawing = false;
 
-/* ─── CANVAS BACKGROUND ─── */
+let ytPlayer = null;
+let ytReady = false;
+const YT_VIDEO_ID = 'SP0RCMtfm4o';
+
+function initYouTube() {
+  const tag = document.createElement('script');
+  tag.src = 'https://www.youtube.com/iframe_api';
+  document.head.appendChild(tag);
+}
+
+window.onYouTubeIframeAPIReady = function () {
+  ytPlayer = new YT.Player('ytPlayerContainer', {
+    height: '1',
+    width: '1',
+    videoId: YT_VIDEO_ID,
+    playerVars: {
+      autoplay: 0,
+      controls: 0,
+      disablekb: 1,
+      fs: 0,
+      iv_load_policy: 3,
+      modestbranding: 1,
+      rel: 0,
+      showinfo: 0,
+      start: 0,
+    },
+    events: {
+      onReady: () => { ytReady = true; },
+    },
+  });
+};
+
+function playSuspenseMusic() {
+  if (ytReady && ytPlayer) {
+    try {
+      ytPlayer.seekTo(0);
+      ytPlayer.setVolume(80);
+      ytPlayer.playVideo();
+    } catch (e) { console.warn('YT play error', e); }
+  }
+}
+
+function stopSuspenseMusic() {
+  if (ytReady && ytPlayer) {
+    try {
+      ytPlayer.pauseVideo();
+      ytPlayer.seekTo(0);
+    } catch (e) { console.warn('YT stop error', e); }
+  }
+}
+
 (function initCanvas() {
   const canvas = document.getElementById('bgCanvas');
   if (!canvas) return;
@@ -76,7 +126,6 @@ let isDrawing = false;
   window.addEventListener('resize', () => { resize(); spawnParticles(); });
 })();
 
-/* ─── FLAG & CODE DATA ─── */
 const CODE_TO_EMOJI = {
   ES: '🇪🇸', AR: '🇦🇷', FR: '🇫🇷', EN: '🏴󠁧󠁢󠁥󠁮󠁧󠁿',
   BR: '🇧🇷', PT: '🇵🇹', NL: '🇳🇱', MA: '🇲🇦',
@@ -94,7 +143,6 @@ function getFlag(nation) {
   return '🏳️';
 }
 
-/* ─── DATA LOADING ─── */
 async function loadData() {
   try {
     const res = await fetch('data.json');
@@ -128,7 +176,6 @@ window.resetApp = function () {
   }
 };
 
-/* ─── RENDER ─── */
 function render() {
   setText('c1', totalPlayers);
   setText('c2', totalNations);
@@ -190,17 +237,6 @@ function renderBalls(list, containerId, isNation) {
       return `<div class="ball ball-player" style="${base}" title="${item}">${initials}</div>`;
     }
   }).join('');
-}
-
-function contrastColor(hex) {
-  try {
-    const h = hex.replace('#', '');
-    const r = parseInt(h.slice(0, 2), 16);
-    const g = parseInt(h.slice(2, 4), 16);
-    const b = parseInt(h.slice(4, 6), 16);
-    const lum = (0.299 * r + 0.587 * g + 0.114 * b) / 255;
-    return lum > .55 ? '#0b0d12' : '#ffffff';
-  } catch { return '#ffffff'; }
 }
 
 function renderLists() {
@@ -283,7 +319,6 @@ function renderHistory() {
   }).join('');
 }
 
-/* ─── DRAW ─── */
 function drawOnce() {
   if (players.length === 0 || nations.length === 0 || isDrawing) return;
   isDrawing = true;
@@ -292,7 +327,9 @@ function drawOnce() {
   toggleMixing(true);
   triggerFlash();
 
-  // Suspense hint animation
+  // 🎵 Play suspense music
+  playSuspenseMusic();
+
   const hint = document.getElementById('drawHint');
   const suspensePhrases = [
     'Mescolando le urne…',
@@ -310,6 +347,10 @@ function drawOnce() {
 
   setTimeout(() => {
     clearInterval(suspenseInterval);
+
+    // 🎵 Stop suspense music
+    stopSuspenseMusic();
+
     const pIdx = Math.floor(Math.random() * players.length);
     const nIdx = Math.floor(Math.random() * nations.length);
     const player = players.splice(pIdx, 1)[0];
@@ -336,12 +377,9 @@ function showResult(player, nation) {
   const playerEl = document.getElementById('playerResult');
   const nationEl = document.getElementById('nationResult');
   const flagSpan = document.getElementById('resultFlagSpan');
-  const repEl = document.getElementById('resultRepresentative');
 
   if (playerEl) playerEl.textContent = player;
   if (nationEl) nationEl.textContent = nation.name;
-
-  // representative now shown in bottom panel only
 
   if (flagSpan) {
     const fc = CODE_TO_FLAGCDN[nation.code];
@@ -374,7 +412,6 @@ function triggerFlash() {
   setTimeout(() => ov.classList.remove('flash'), 180);
 }
 
-/* ─── WHATSAPP ─── */
 function buildWhatsappText() {
   if (history.length === 0) return 'Nessun sorteggio effettuato.';
   const lines = [...history].reverse().map((h, i) => {
@@ -388,9 +425,9 @@ function sendWhatsapp() {
   window.open(`https://wa.me/?text=${encodeURIComponent(buildWhatsappText())}`, '_blank');
 }
 
-/* ─── INIT ─── */
 document.addEventListener('DOMContentLoaded', () => {
   loadData();
+  initYouTube();
   document.getElementById('btnDraw')?.addEventListener('click', drawOnce);
   document.getElementById('btnWa')?.addEventListener('click', sendWhatsapp);
 });
